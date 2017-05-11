@@ -168,10 +168,10 @@ Name & $N$ & Sequence\\
 \hline
 N1 & 16 & phphphpttphphphp \\
 A1 & 16 & pphpphhpphpphhpp \\
-Ran1 & 16 & \textbf{(add)}\\
-Ran2 & 16 &  \textbf{(add)}\\
-A2 & 35 & A1-ttt-A1\\
-TN & 35 & A1-ttt-N1\\
+R1 & 16 & \textbf{(add)}\\
+R2 & 16 &  \textbf{(add)}\\
+A2 & 35 & (A1)ttt(A1)\\
+TN & 35 & (A1)ttt(N1)\\
 \end{tabular}
 \end{ruledtabular}
 \end{table}
@@ -185,12 +185,15 @@ Both ST and MS simulations are carried out with two types of conformational upda
 \caption{\label{tab:table1} List of simulations carried out in this work. }
 \begin{ruledtabular}
 \begin{tabular}{lccccr}
-Runs & Algorithm & $T$ & MC steps &  Sequence set\\
+Runs & Algorithm & $\kb T$  & MC steps &  Sequences\\
 \hline
-32$\times$4\footnote{32 runs carried out for each of the 4 sequences. } & ST & $8\times 10^6$ &A1,N1,Ran1,Ran3\\
-32$\times$8\footnote{32 independent runs carried out at each of the temperatures $T_1$ to $T_8$} & MS & $144\times 10^6$ & 16 &$\mathrm{S16}_{144}$\\
-16 & MS & $5\times 10^9$ & 16 & S16 \\
-16 & MS & $4\times 10^9$ & 35 & S35 \\
+32 & ST & 0.43--0.65 & $8\times 10^6$ &A1\\ 
+32 & ST & 0.43--0.65 & $8\times 10^6$ &N1\\ 
+32 & ST & 0.43--0.65 & $8\times 10^6$ &R1\\ 
+32 & ST & 0.43--0.65 & $8\times 10^6$ &R2\\ 
+32$\times$8\footnote{32  runs per temperature for 8 temperatures in the range given.} & MS &0.43--0.65& $144\times 10^6$ & $\mathrm{S16}_{144}$\\
+16 & MS & 0.43  & $5\times 10^9$ &  S16 \\
+16 & MS & 0.46 & $4\times 10^9$ &  S35 \\
 \end{tabular}
 \end{ruledtabular}
 \end{table}
