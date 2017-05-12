@@ -149,25 +149,25 @@ P_\mathrm{acc} (\sbar\rightarrow\sbar') = \min [1, \exp\{-\beta\Delta E+\Delta h
 \end{equation}
 where $\Delta E = E(\sbar',\rbar)-E(\sbar,\rbar)$ and $\Delta h = h_{\sbar'}-h(\sbar)$.
 
-\section{Methods}
+\section{Model and Methods}
 \subsection{Coarse-grained 3-letter model for protein folding}
 \noindent
-All calculations were carried out on a coarse-grained model for protein folding~\citenum{Bhattacherjee2012}. In this model, there are 3 different amino acid types: hydrophobic (h), polar (p) and turn-type (t). The backbone chain is represented atomistically by the N, H, $\mathrm{C}_\alpha$, $\mathrm{H}_{\alpha 1}$, C$'$ and O atoms. By contrast, the sidechain represention is simplified to a single enlarged $\mathrm{C}_\beta$ atom, which is geometrically identical for h and p types. The sidechain is absent for the t type which instead has an $\mathrm{H}_{\alpha 2}$ atom. The t type is therefore closely related to glycine. All bond lengths, bond angles, and peptide plane angles (180$^\circ$) are held fixed. Hence, an $N$-amino acid chain conformation $\rbar$ can, for any sequence $\sbar$, is therefore described by the set of 2$N$ backbone torsional angles $\{\phi_i$, $\psi_i\}_{i=1}^{N}$. 
+All calculations were carried out using the coarse-grained model for protein folding developed in Ref.~\citenum{Bhattacherjee2012}. In this model, there are 3 different amino acid types: hydrophobic (h), polar (p) and turn-type (t). The backbone chain is represented atomistically by the N, H, $\mathrm{C}_\alpha$, $\mathrm{H}_{\alpha 1}$, C$'$ and O atoms. By contrast, the sidechain represention is simplified to a single enlarged $\mathrm{C}_\beta$ atom, which is geometrically identical for h and p types. The sidechain is absent for the t type which instead has an $\mathrm{H}_{\alpha 2}$ atom. The t type is therefore closely related to glycine. All bond lengths, bond angles, and peptide plane angles (180$^\circ$) are held fixed. Hence, an $N$-amino acid chain conformation $\rbar$ can, for any sequence $\sbar$, is therefore described by the set of 2$N$ backbone torsional angles $\{\phi_i$, $\psi_i\}_{i=1}^{N}$. 
  
 This geometrical description is paired with a simplified but finely tuned energy function with 4 terms: $E= E_\mathrm{ev} + E_\mathrm{loc} + E_\mathrm{hb} + E_\mathrm{hp}$. The first two, $E_\mathrm{ev}$ and $E_\mathrm{loc}$, represent excluded-volume effects of all atoms and local electrostatic effects, respectively. The hydrogen-bond energy, $E_\mathrm{hb}$, represents directionally dependent interactions between NH and CO groups which are necessary for secondary structure formation. Finally, the ``hydrophobicity" term, $E_\mathrm{hp}$, implements pairwise Lennard-Jones-like interactions between the $C_\beta$ atoms of h amino acids which are necessary for driving chain collapse during folding. Various model parameters, e.g., the strengths of hydrophobic attractions and hydrogen bonding, were determined based on the ability of the model to spontaneously fold a set of model sequences with 18-54 amino acids into  structurally diverse and thermodynamically stable native states with both $\beta$ and $\alpha$-structure. As it turned out, this strategy made the model robust enough to fold sequences designed to have mised $\alpha$ and $\beta$ structure. 
+
+\subsection{Model sequences}
+
+The sequences studied in this work are summarized in Table~I. 
  
-\subsection{Sequence sets}
-\noindent
-
-
 \begin{table}
-\caption{\label{tab:table1} Model sequences of different sequence lengths $N$ studied in this work. In addition to the 6 sequences listed, we studied sets of 1,024 sequences derived from the A1-N1 and A2-TN pairs, respectively, (see text) denoted S16 and S35, respectively, and a restricted S16-set of 144 sequences denoted $\mathrm{S16}_{144}$ (also studied in Ref.~\protect\citep{Holzgrafe2014}).  }
+\caption{\label{tab1} List of model sequences of different lengths $N$ studied in this work.}
 \begin{ruledtabular}
 \begin{tabular}{lcr}
-Name & $N$ & Sequence\\
+Name & $N$ & Sequence\footnote{In addition, we study two sets of 1,024 sequences derived from the A1-N1 and A2-TN pairs (see text) denoted $\mathrm{S16}_{1024}$  and $\mathrm{S35}_{1024}$, respectively, and a restricted set $\mathrm{S16}_{144}$ with 144 sequences taken from S16 ($\mathrm{S16}_{144}$ was also studied in Ref.~\protect\citenum{Holzgrafe2014}). } \\
 \hline
-N1 & 16 & phphphpttphphphp \\
 A1 & 16 & pphpphhpphpphhpp \\
+N1 & 16 & phphphpttphphphp \\
 R1 & 16 & \textbf{(add)}\\
 R2 & 16 &  \textbf{(add)}\\
 A2 & 35 & (A1)ttt(A1)\\
@@ -179,10 +179,10 @@ TN & 35 & (A1)ttt(N1)\\
 
 \subsection{Monte Carlo simulation parameters}
 \noindent
-Both ST and MS simulations are carried out with two types of conformational updates $\rbar\rightarrow\rbar'$: (1) a global pivot move (20\%) which randomly picks a $\phi_\mathrm{i}$ angle or $\psi_\mathrm{i}$ angle and assigned a new value between $-\pi$ and $\pi$; and (2) an approximately local move (80\%) which turns the $\phi_\mathrm{i}$ and $\psi_\mathrm{i}$-angles of 4 consecutive amino acids in a coordinated manner.~\cite{Favrin2003} In MS simulations, sequence updates $\sbar\rightarrow\sbar'$ are attempted every $1000$ step and carried out by randomly picking a new sequence $\sbar'\ne\sbar$ and applying the accept-reject criterion in Eq.~\ref{accrej}. In ST, temperature updates $m\rightarrow m'$ are attempted every 100 steps. Observables are sampled every 10 or 100 MC step. All simulations carried out in this work are summarized in Table~1. 
+Both ST and MS simulations are carried out with two types of conformational updates $\rbar\rightarrow\rbar'$: (1) a global pivot move (20\%) which randomly picks a $\phi_\mathrm{i}$ angle or $\psi_\mathrm{i}$ angle and assigned a new value between $-\pi$ and $\pi$; and (2) a semi-local move (80\%) which turns the $\phi_\mathrm{i}$ and $\psi_\mathrm{i}$-angles of 4 consecutive amino acids in a coordinated manner.~\cite{Favrin2001} In MS simulations, sequence updates $\sbar\rightarrow\sbar'$ are carried out by randomly picking a new sequence $\sbar'\ne\sbar$ and applying the accept-reject criterion in Eq.~\ref{accrej}. A sequence move is attempted every $1,000$ MC step while temperature updates $m\rightarrow m'$ are attempted every 100 steps. The simulations carried out in this work are summarized in Tables~II.
 
 \begin{table}
-\caption{\label{tab:table1} List of simulations carried out in this work. }
+\caption{\label{tab2} List of simulations carried out in this work. }
 \begin{ruledtabular}
 \begin{tabular}{lccccr}
 Runs & Algorithm & $\kb T$  & MC steps &  Sequences\\
@@ -192,15 +192,17 @@ Runs & Algorithm & $\kb T$  & MC steps &  Sequences\\
 32 & ST & 0.43--0.65 & $8\times 10^6$ &R1\\ 
 32 & ST & 0.43--0.65 & $8\times 10^6$ &R2\\ 
 32$\times$8\footnote{32  runs per temperature for 8 temperatures in the range given.} & MS &0.43--0.65& $144\times 10^6$ & $\mathrm{S16}_{144}$\\
-16 & MS & 0.43  & $5\times 10^9$ &  S16 \\
-16 & MS & 0.46 & $4\times 10^9$ &  S35 \\
+16 & MS & 0.43  & $5\times 10^9$ &  $\mathrm{S16}_{1024}$ \\
+16 & MS & 0.46 & $4\times 10^9$ &  $\mathrm{S35}_{1024}$ \\
 \end{tabular}
 \end{ruledtabular}
 \end{table}
 
 \subsection{Stability measures}
 \noindent
-To quantify the stabilities of various folds, we use the measures used in Ref.~\cite{Holzgrafe2015}. We classify conformations $r$ as part of a fold if $Q\ge0.8$ where $Q\in [0,1]$ quantifies the similarity of $r$ to that fold. For folds A and B, $Q$ is determined by defining a set of backbone-backbone hydrogen bonds that are present in those folds (ignoring N and C terminal amino acids). For fold A, the fold-specific set of contacts (i,j) between the CO group of amino acid i and the NH group of amino acid j is $\{$(2,6), (3,7), (4,8), (5,9), (6,10), (7,11), (8,12), (9,13), (10,14), (11,15)$\}$, and for fold B the contact set is $\{$(3,14), (5,12), (7,10), (10,7), (12,5), (14,3)$\}$. A hydrogen bond is considered formed if (i) the NHO and COH angles both are $>90^\circ$ and (ii) the HO distance is $<2.7$~{\AA}. 
+To quantify the stabilities of various folds, we use the measures introduced in Ref.~\cite{Holzgrafe2015}. We classify conformations $r$ as part of a fold if $Q\ge0.8$ where $Q\in [0,1]$ quantifies the similarity of $r$ to that fold. 
+
+For folds A and B, $Q$ is determined by defining a set of backbone-backbone hydrogen bonds that are present in those folds (ignoring N and C terminal amino acids). For fold A, the fold-specific set of contacts (i,j) between the CO group of amino acid i and the NH group of amino acid j is $\{$(2,6), (3,7), (4,8), (5,9), (6,10), (7,11), (8,12), (9,13), (10,14), (11,15)$\}$, and for fold B the contact set is $\{$(3,14), (5,12), (7,10), (10,7), (12,5), (14,3)$\}$. A hydrogen bond is considered formed if (i) the NHO and COH angles both are $>90^\circ$ and (ii) the HO distance is $<2.7$~{\AA}. 
 
 %\begin{equation}
 %Q_\mathrm{2\alpha} = ( Q_\alpha^\mathrm{1-16} + Q_\alpha^\mathrm{20-35} + Q_\mathrm{tert}) ) / 3
@@ -212,7 +214,7 @@ To quantify the stabilities of various folds, we use the measures used in Ref.~\
 
 \begin{figure}
 \includegraphics[width=6.0cm]{MCtraj}
-\caption{Example of a multisequence simulation.}
+\caption{Example of a multisequence simulation trajectory.}
 \end{figure}
 
 %
@@ -269,7 +271,7 @@ Having calculated these fold stabilities, we are in a position to determine if t
 
 \subsection{Stability properties of fold-to-fold mutational pathways}
 \noindent 
-An apparently general characteristic of designed and natural protein folding switching is that the stability of sequences near the switch point have reduced stability.~\cite{Bryan2010} The results from our model exhibit a similar trend. Fig.~6A and B shows the total stability $\Ptot$ at different mutational distances between start and end points. Intermediate sequences are less stable than at distances $h=0$ and $h=10$ although there are large variations as indicated by the spread between upper and lower bounds. Nonetheless, there is a clear statistical trend that sequences become less stability as more and more mutations are applied to the any of the 4 starting points. The minimum in stability occur closer to N1 or TN indicating that the all-$\alpha$ folds IA and IIA are more mutationally robust than the $\beta$-structure containing folds IB and IIB. 
+An apparently general characteristic of designed and natural protein folding switching is that the stability of sequences near the switch point have reduced stability.~\cite{Bryan2010} The results from our model exhibit a similar trend. Fig.~6A and B shows the total stability $\Ptot$ at different mutational distances between start and end points. Intermediate sequences are less stable than at distances $h=0$ and $h=10$ although there are large variations as indicated by the spread between upper and lower bounds. Nonetheless, there is a clear statistical trend that sequences become less stable as successive mutations are applied to any of the 4 starting points until a minimum is reached. These minima in stability occur closer to N1 and TN in the two systems, respectively, indicating that the all-$\alpha$ folds IA and IIA are more mutationally robust than the all-$\beta$ fold IB and mixed $\alpha$/$\beta$-fold IIB. 
 
 \begin{figure}
 \includegraphics[width=7.8cm]{Paths}
@@ -278,7 +280,11 @@ An apparently general characteristic of designed and natural protein folding swi
 
 %The smooth average stability trends in Fig.~6 might have been underpinned by individual mutational pathways that gradually shift the population between the two folds, however, this is not the case.
 
-The smooth average stability trends in Fig.~6A and B belie the real character of the individual mutational pathways which abruptly switch from one fold to another. The switch in fold along individual pathways are typically completed in only 1-2 mutations. This can be seen from the distribution of switch lengths, $L_\mathrm{s}$, in Fig.~5C and D, taken over all pathways with $\Pcut=0.50$, where  $L_\mathrm{s} = 2$ for a switch that goes directly from a node $P_A>P_B$ to a node $P_B>P_A$ and $L_\mathrm{s} > 2$ if it also passes through one or more bistable sequences. Hence, for $\Pcut = 0.5$, it is fairly common that viable pathways pass through one or more sequences are that bistable, i.e., that have substantial populations of both folds. 
+The smooth average stability trends in Fig.~6A and B, however, belie the real character of the \textit{individual} mutational pathways which tend to exhibit abrupt switches between the two folds. 
+%To examine how the fold transitions take place in our model, we classify all stable sequences (i.e. those with $\Ptot>\Pcut$) as either having one dominant fold, i.e., one of the two folds have little stability, or as bistable meaning that both folds have roughly similar stability $\PaI$ and $\PaII$.
+This can be seen from the distributions of switch lengths, $L_\mathrm{s}$, in Fig.~5C and D, which are taken over all pathways with $\Pcut=0.50$,
+%In determining $L_\mathrm{s}$, we define for each pathway how many nodes are included in the  ...
+where  $L_\mathrm{s} = 2$ for a switch that goes directly from a node $P_A>P_B$ to a node $P_B>P_A$ and $L_\mathrm{s} > 2$ if it also passes through one or more bistable sequences. The switch in fold along individual pathways are typically completed in only 1-2 mutations. Hence, for $\Pcut = 0.5$, it is fairly common that viable pathways pass through one or more sequences are that bistable, i.e., that have substantial populations of both folds. 
 
 Interestingly, the passage through bistable sequences become less common for more stable pathways in the A1-TN system, as can be seen from the dependence of $\left <L_\mathrm{s}\right >$ on $\Pcut$ (see Fig.~5C(inset)). For example, for $\Pcut=0.70$, there are no viable fold switching pathways between the $\alpha$-helix and $\beta$-hairpin folds that passes through a bistable point because $\left <L_\mathrm{s}\right > =  2$. The situation for the A2-TN system is different, where $\left <L_\mathrm{s}\right >$ is relatively stable around 3. An underlying reason for this behavior is apparent by comparing the total stability and bistability of all sequences. As shown in Fig.~5E and F, there is a clear trend that sequences with high total stability do not exhibit high bistability but instead they tend to have one clearly dominant fold.
 
