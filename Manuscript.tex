@@ -55,15 +55,17 @@ rsi,%
 \newcommand {\PbI}    	{{P_\mathrm{IB}}}
 \newcommand {\PaII}    	{{P_\mathrm{IIA}}}
 \newcommand {\PbII}    	{{P_\mathrm{IIB}}}
-\newcommand {\SR}		{{S144}}
-\newcommand {\SI}		{{SBI}}
-\newcommand {\SII}		{{SBII}}
+\newcommand {\Eave}	{{E_\mathrm{ave}}}
+\newcommand {\sigE}	{{\sigma_{\left < E \right >}}}
+\newcommand {\SR}		{${\mathrm{S16}_{144}}$}
+\newcommand {\SI}		{${\mathrm{S16}_{1024}}$}	
+\newcommand {\SII}		{${\mathrm{S16}_{1024}}$}
 
 \begin{document}
 
 \preprint{AIP/123-QED}
 
-\title[Multisequence Monte Carlo simulations]{Exploring mutation-induced protein fold switching using multisequence Monte Carlo simulations}
+\title[Multisequence Monte Carlo simulations]{Multisequence algorithm for coarse-grained biomolecular simulations: application to protein folding switching}
 
 \author{A. Aina}
 \author{S. Wallin}
@@ -74,7 +76,8 @@ Memorial University of Newfoundland, Department of Physics and Physical Oceanogr
 \date{\today}
 
 \begin{abstract}
-We test an algorithm that can calculate the thermodynamic behavior of multiple amino acid  sequences in a single enhanced Monte Carlo run, in a coarse-grained protein model. 
+We evaluate a generalized-ensemble algorithm for coarse-grained simulations of biomolecules that allows the thermodynamics of multiple sequences to be calculated in a single ``multisequence" run. By carrying out a random walk in sequence space, conformational sampling is also enhanced. Escape from local energy minima is achieved by visiting sequences for which the minima is shallower or absent. We apply the algorithm to a coarse-grained model for protein folding with 7 atoms per amino acid and apply it to sets of sequences with up to 35 amino acids spanning sequence space  With the multisequence algorithm, we show that the folding thermodynamics of $>$1,000 sequences at relatively low temperatures can be readily calculated. We use the resulting data to explore the statistics of pathways in sequence space between the two pairs of folds. 
+ 
 \end{abstract}
 
 \pacs{Add  here}
@@ -147,7 +150,7 @@ Two types of MC updates are required to sample from the distrubution in Eq.~\ref
 P_\mathrm{acc} (\sbar\rightarrow\sbar') = \min [1, \exp\{-\beta\Delta E+\Delta h\}]\,,
 \label{accrej}
 \end{equation}
-where $\Delta E = E(\sbar',\rbar)-E(\sbar,\rbar)$ and $\Delta h = h_{\sbar'}-h(\sbar)$.
+where $\Delta E = E(\sbar',\rbar)-E(\sbar,\rbar)$ and $\Delta h = h({\sbar'})-h(\sbar)$.
 
 \section{Model and Methods}
 \subsection{Coarse-grained 3-letter model for protein folding}
@@ -214,7 +217,7 @@ For folds A and B, $Q$ is determined by defining a set of backbone-backbone hydr
 
 \begin{figure}
 \includegraphics[width=6.0cm]{MCtraj}
-\caption{Example of a multisequence simulation trajectory.}
+\caption{(A) Example simulation trajectory of the MS algorithm applied to the sequence set $\mathrm{S16}_{144}$. The plot shows the MC evolution of the sequence $\sbar$ (numbered 1--144), the total potential energy $E$ and the root-mean-square deviation (RMSD) calculated against the fold IA (light blue) and fold IB (dark red) structures shown in (B). The simulation is carried out at $\kb T = 0.43$ corresponding to the lowest studied temperature.  (B) Representative structures of fold IA and fold IB, selected to be the minimum-energy conformations found for the sequences A1 and N1, respectively. (C) Representative fold IIA and fold IIB structures selected to be the minimum-energy conformations of A2 and TN, respectively. }
 \end{figure}
 
 %
@@ -245,13 +248,13 @@ We apply the multisequence algorithm to this set of 144 sequences across a range
 Sequence updates $\sbar\rightarrow\sbar'$ are carried out by picking a new sequence $\sbar'$ randomly from the entire set of allowed sequences. Therefore, a sequence update typically changes more than one amino acid position. In other words, if the step size in sequence space is $\Delta H$, then typically $\Delta H>1$. Interestingly, despite the large $\Delta H$ and low $T$, the overall (average) acceptance rate $P_\mathrm{acc}=0.xx$ for $\sbar\rightarrow\sbar'$ updates which is not unreasonably low. Higher $P_\mathrm{acc}$ can be obtained by restricting proposed moves such that $\Delta H\le\Delta H_\mathrm{max}$, as shown in Figure~3. For example, an acceptance rate close to the oft-quoted rule-of-thumb value $0.25~\cite{Gilks1996} $ is obtained with $\Delta H_\mathrm{max}=4$, and with $\Delta H_\mathrm{max} = 1$ (only point mutations), $P_\mathrm{acc}=0.xx$. For simplicity, in this work, all simulations are carried without restrictions on how new sequences $\sbar'$ are drawn. 
 
 \begin{figure}
-\includegraphics[width=5.8cm]{Pacc}
-\caption{Averages acceptance rates $P_\mathrm{acc}$ of mutational updates $\sbar\rightarrow\sbar'$ as a function of the number of changed amino acid positions, $\Delta H$.}
+\includegraphics[width=7.8cm]{Pacc}
+\caption{Acceptance rates for $\sbar\rightarrow\sbar'$ updates in MS simulations of the {\SR} sequence set as a function of (A) the number of changed amino acid positions  and (B) temperature. }
 \end{figure}
 
 To assess computational efficiency, we compare with results from simulated tempering (ST) simulations carried out on 4 of the 144 sequences, namely A1 and N1 and the two sequences R1 and R2 chosen randomly at $H=4$ and $H=6$ from A1, respectively (see Table~1). While ST provides the thermodynamics of a given sequence across the 8 temperatures $T_1, ..., T_8$ in a single run, a single MS simulation provides the thermodynamics of all 144 sequences for one $T_\mathrm{i}$. We adjust the simulation lengths for ST and MS runs such that an identical number of sampled conformations are obtained for each $\sbar$ and $T_\mathrm{i}$ combination, ensuring also that similar computational resources are used for the two algorithms. 
 
-Figure 4 shows the statistical error, $\sigma_{\left <E\right>}$, estimated for the average energy, $\left <E\right >$, for the 4 different sequences. 
+Figure 4 shows the statistical error, $\sigE$, estimated for the average energy, $\left <E\right >$, for the 4 different sequences. 
 
 \begin{figure*}
 \rotatebox{0}{\includegraphics[width=16.6cm]{ntwk16}}\\
@@ -271,7 +274,8 @@ Having calculated these fold stabilities, we are in a position to determine if t
 
 \subsection{Stability properties of fold-to-fold mutational pathways}
 \noindent 
-An apparently general characteristic of designed and natural protein folding switching is that the stability of sequences near the switch point have reduced stability.~\cite{Bryan2010} The results from our model exhibit a similar trend. Fig.~6A and B shows the total stability $\Ptot$ at different mutational distances between start and end points. Intermediate sequences are less stable than at distances $h=0$ and $h=10$ although there are large variations as indicated by the spread between upper and lower bounds. Nonetheless, there is a clear statistical trend that sequences become less stable as successive mutations are applied to any of the 4 starting points until a minimum is reached. These minima in stability occur closer to N1 and TN in the two systems, respectively, indicating that the all-$\alpha$ folds IA and IIA are more mutationally robust than the all-$\beta$ fold IB and mixed $\alpha$/$\beta$-fold IIB. 
+An apparently general characteristic of designed and natural protein folding switching is that the stability of sequences near the switch point have reduced stability.~\cite{Bryan2010} The results from our model exhibit a similar trend. Fig.~6A and B shows the total stability $\Ptot$ at different mutational distances between start and end points. Intermediate sequences are less stable than at distances $h=0$ and $h=10$, although there are large variations as indicated by the spread between upper and lower bounds. Nonetheless, there is a clear statistical trend that sequences become gradually less stable as successive mutations are applied to any of the 4 starting points until a minimum is reached. 
+%These minima in stability occur closer to N1 and TN in the two systems, respectively, indicating that the IA/IIA folds are more mutationally robust than the IB/IIB folds. 
 
 \begin{figure}
 \includegraphics[width=7.8cm]{Paths}
@@ -280,13 +284,13 @@ An apparently general characteristic of designed and natural protein folding swi
 
 %The smooth average stability trends in Fig.~6 might have been underpinned by individual mutational pathways that gradually shift the population between the two folds, however, this is not the case.
 
-The smooth average stability trends in Fig.~6A and B, however, belie the real character of the \textit{individual} mutational pathways which tend to exhibit abrupt switches between the two folds. 
-%To examine how the fold transitions take place in our model, we classify all stable sequences (i.e. those with $\Ptot>\Pcut$) as either having one dominant fold, i.e., one of the two folds have little stability, or as bistable meaning that both folds have roughly similar stability $\PaI$ and $\PaII$.
-This can be seen from the distributions of switch lengths, $L_\mathrm{s}$, in Fig.~5C and D, which are taken over all pathways with $\Pcut=0.50$,
-%In determining $L_\mathrm{s}$, we define for each pathway how many nodes are included in the  ...
-where  $L_\mathrm{s} = 2$ for a switch that goes directly from a node $P_A>P_B$ to a node $P_B>P_A$ and $L_\mathrm{s} > 2$ if it also passes through one or more bistable sequences. The switch in fold along individual pathways are typically completed in only 1-2 mutations. Hence, for $\Pcut = 0.5$, it is fairly common that viable pathways pass through one or more sequences are that bistable, i.e., that have substantial populations of both folds. 
+However, the smooth stability trends in Fig.~6A and B belie the real character of the \textit{individual} mutational pathways which tend to exhibit an abrupt switch between the two folds. To examine the statistics of fold transitions in our model, we first make a distinction between two types of stable sequences: those that fold into a single unique fold, thus behaving as classical proteins, and those that exhibit significant stabilities of both folds. Such ``bistable" sequences are interesting from a biophysical perspective in that they alternate between populating two different folds and hence are highly dynamic proteins. Indeed, they have been proposed to play an important role in the evolution of new protein folds.~\cite{Sikosek2016} 
 
-Interestingly, the passage through bistable sequences become less common for more stable pathways in the A1-TN system, as can be seen from the dependence of $\left <L_\mathrm{s}\right >$ on $\Pcut$ (see Fig.~5C(inset)). For example, for $\Pcut=0.70$, there are no viable fold switching pathways between the $\alpha$-helix and $\beta$-hairpin folds that passes through a bistable point because $\left <L_\mathrm{s}\right > =  2$. The situation for the A2-TN system is different, where $\left <L_\mathrm{s}\right >$ is relatively stable around 3. An underlying reason for this behavior is apparent by comparing the total stability and bistability of all sequences. As shown in Fig.~5E and F, there is a clear trend that sequences with high total stability do not exhibit high bistability but instead they tend to have one clearly dominant fold.
+We consider a stable sequence to be bistable if $B>0.5$, where $B$ is a bistability measure (see Fig.~6 legend); otherwise, it is considered a classical protein. In principle, a fold transition can occur directly between two classical proteins with unique folds, or it can proceed via one or more intermediate bistable sequences which populate both folds to some extent. We  define the switch length of a mutational pathway $L_\mathrm{s}=2+n_\mathrm{B}$, where $n_\mathrm{B}$ is the number of bistable sequences in between the two classical sequences that define the switch point. Hence, a path with $L_\mathrm{s}=2$ accomplishes a fold switch in a single mutational step without going through a bistable point. From the distributions of  $L_\mathrm{s}$ in Fig.~5C and D taken over all pathways with $\Pcut=0.50$, it can be seen that fold switching along individual pathways are typically completed in 1-2 mutations and often in a single step in the A1-N1 system. Hence, fold switching is typically abrupt in our model and, for $\Pcut = 0.5$, it is fairly common that viable pathways pass through one or two bistable sequences. 
+
+Interestingly, fold switching through bistable sequences become less common as selection for more stable pathways is made in the A1-N1 system, as can be from the decrease in $\left <L_\mathrm{s}\right >$ as a function of $\Pcut$ (see Fig.~5C(inset)). For $\Pcut=0.70$, there are no longer any viable pathways between the $\alpha$-helix and $\beta$-hairpin folds that passes through a bistable point because $\left <L_\mathrm{s}\right > =  2$. The situation for the A2-TN system is different, where $\left <L_\mathrm{s}\right >$ is relatively stable around 3. For this system, there are no direct $L_\mathrm{s}=2$ paths available even at $\Pcut=0.50$. Therefore, bistable sequence play a crucial role in bridging the folds IIA and IIB even through their stabilities are significantly reduced. 
+
+An underlying reason for the preferential behavior is apparent by comparing the total stability and bistability of all sequences. As shown in Fig.~5E and F, there is a clear trend that sequences with high total stability do not exhibit high bistability but instead they tend to have one clearly dominant fold.\\
 
 %\subsection{Super-highways in sequence space}
 %
@@ -294,8 +298,22 @@ Interestingly, the passage through bistable sequences become less common for mor
 %
  
 \section{Discussion}
+\noindent
+We have tested an algorithm for coarse-grained biomolecular simulations that relies on making the sequence of the molecule a dynamical parameter. 
+
+
+For comparison, we used the well-established generalized-ensemble ST algorithm and focused on 144 model sequences with 16 amino acids ({\SR}). As a measure of computational efficiency, we used on the statistical error $\sigE$ in the estimation of the average total energy $E$ for 4 different sequences which are part of {\SR}. 
+
+
+Our results show that at high $T$, well above the folding temperatures of both A1 and N1, we find that the statistical errors $\sigE$ for ST and MS are small and very similar. This is not surprising given that conformational sampling of relatively short polymer chains at high $T$ does not involve crossing major energy barriers. Therefore, successive sampled conformational states, for a given combination of sequence $\sbar$ and temperature $T$, are likely uncorrelated in both ST and MS simulations which, in turn, leads to similar estimates of $\Eave$ (and $\sigE$). At low $T$,...
+
+Hence, we conclude that the computational efficiency of the MS algorithm is comparable to ST. However, that while the ST simulation requires that the thermodynamic behavior is calculated at a range of temperatures, MS works well on its own directly at low temperatures. ST was introduced as an extension to the standard, fixed-$T$ Metropolis-Hastings algorithm in order to overcome the poor mixing of states at low temperatures, i.e., the tendency for the simulations at low $T$ to become trapped in local free energy minima. The MS algorithm, however, efficiently calculates the thermodynamics at low $T$'s without visits to other $T$'s. In the MS algorithm, it is visits to sequences with poor native state stability rather than high $T$'s that drive the decorrelation of generated states and escape from local traps. This way, calculation of low-$T$ thermodynamics is enhanced in MS simulations while at the same time enhancing coverage in sequence space. This makes the MS algorithm ideal for situations in which the finite-$T$ thermodynamic behavior of multiple sequences are of interest. 
+
+A notable feature of the MS algorithm is that provides escape from local energy minima on the free energy landscape of proteins without resorting to a change in temperature. This feature could make it attractive as an alternative to exploring the equilibrium behavior of proteins and peptides in lipid membranes, where escape from local minima are especially challenging even in CG simulations.~\cite{Bereau2015} Sampling in membrane simulations at high $T$, such as in replica-exchange simulations, are usually avoided in membrane simulations because it can lead to unwanted perturbation of the lipid bilayer structure although it can be a viable approach in particular cases.~\cite{Ulmschneider2010} 
 
 \section{Conclusion}
+\noindent
+We have evaluated an algorithm for coarse-grained biomolecular simulations that allow the thermodynamics of multiple different sequences to be calculated in a single run. Here we showed that with this MS algorithm, the folding thermodynamics of over 1,000 amino acid sequences with each 35 amino acid could be determined in a coarse-grained model with 3 amino acid types. In addition to being a convenient for calculations of multiple sequences, the method enhances conformational sampling with an efficiency comparable to simulated tempering. Random walks across sequence space allow both sampling of many sequences and efficient escape from local free energy minima in the free energy landscape. The method might be well suited for coarse-grained simulations of other biomolecular systems, such as phospholipid bilayers. 
 
 \bibliography{/Users/stefan/Documents/Manuscripts/Jshort,/Users/stefan/Documents/Manuscripts/MyRefs}
 
