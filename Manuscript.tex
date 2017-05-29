@@ -19,15 +19,15 @@
 %
 % Use this file as a source of example code for your aip document.
 % Use the file aiptemplate.tex as a template for your document.
-\documentclass[%
- aip,
+\documentclass[
+aip,
 %jmp,%
 %bmf,%
 %sd,%
 rsi,%
- amsmath,amssymb,
+amsmath,amssymb,
 %preprint,%
- reprint,%
+reprint,%
 %author-year,%
 %author-numerical,%
 ]{revtex4-1}
@@ -93,23 +93,33 @@ We consider a generalized-ensemble algorithm for coarse-grained simulations of b
 
 \section{Introduction}
 \noindent
-A large number of coarse-grained models for biomolecular simulations have been developed the last decade.~\cite{Ingolfsson2014} Several characteristics of such models goal of such models is to speed up simulations through a reduced number of degrees-of-freedom, 
+Recent years have seen important advances in biomolecular simulation methods, including improvements to standard molecular dynamics force fields,~\cite{Piana2014} the advent of several alternative atomistic simulation approaches,~\cite{Ding2008,Irback2006,Verma2009,Yang2007} and new techniques for  conformational sampling.~\cite{Bernardi2015} These advances have in part triggered major efforts~\cite{McGuffee2010,Perilla2016,Lindorff-Larsen2011,Yu2016} to characterize the molecular dynamics of bio-systems of different sizes, e.g., a small native protein on the millisecond scale~\cite{Lindorff-Larsen2011} or a comprehensive model cytoplasm on the nanosecond scale.~\cite{Yu2016} While encouraging, these large-scale simulations also highlight the fact that severe tradeoffs in size and time scales will likely persist for the foreseeable future. 
 
-In this situation, it is of interest to explore strategies that can simulate multiple sequence variants in an efficient manner. 
+One way to expand the range of biomolecular simulations is to turn to coarse-grained models, with the basic aim to simplify the physical description of interactions while retaining the essential physics of the system under study.~\cite{Riniker2012} Ingolfsson \textit{et al.} list four main factors that make CG models computationally fast: reduction in the number of degrees of freedom, faster simulation dynamics, emphasis on short-range interactions and the ability of using larger integration time steps.~\cite{Ingolfsson2014} To this list can be added that CG representations often open up for alternative sampling schemes beyond traditional molecular dynamics approaches which can further speed up conformational sampling, e.g., activation-relaxation kinetics,~\cite{Beland2011} discrete molecular dynamics~\cite{Proctor2011} and various Monte Carlo-based strategies such as cluster moves.~\cite{Vitalis2009} 
 
-Modern investigations into biophysical properties of biomolecular systems are routinely carried out not only on a single species but on multiple molecular variants.~\cite{Vukmirovic2000,Nickson2010} For example, protein engineering methods are used to provide mechanistic insight into the specificity of protein-protein and protein-DNA interactions, to compare the  conformational propensities of disease-related mutations of aggregation-prone proteins, and optimize biomolecular properties through directed evolution. Moreover, large-scale screening techniques such as phage display and microarray chips are used to provide biophysical properties across entire genomes. In short, through the study of a biomolecular system and related variants molecular variants are studied in order to gain a more complete picture of the biophysical and biochemical properties of the system and provide evolutionary context. 
+The challenges of simulating individual biomolecular systems notwithstanding, a range of systems naturally call for the investigation and comparison of many molecular variants, e.g., understanding the molecular mechanisms of specificity in protein-protein, peptide-protein,~\cite{Zarrinpar2003} or protein-nucleotide interactions, or the role of mutations in disease processes such as protein aggregation. Another example is protein folding where unique insight has been achieved by comparing the folding within and between protein families.~\cite{Tzul2017,Wensley2010}
 
-While protein or DNA sequences are easily changed on the computer, the high computational cost of simulating even a single moderately-sized biomolecule makes systematic explorations of sequence space challenging. Some notable efforts have nonetheless been attempted, including simulations of all 136 unique tetranucleotide sequences in B-DNA oligonucleotides using all-atom explicit water molecular dynamics.~\cite{Beveridge2004}
+In this work, we evaluate a Monte Carlo (MC)-based algorithm that can in principle calculate the thermodynamics of multiple sequences in a single run and apply it to a coarse-grained model for protein folding. This ``multisequence" (MS) method was originally developed in the context of homo- and heteropolymer simulations~\cite{Irback1995} and was later adapted for the characterization of peptide-protein binding specificity,~\cite{Bhattacherjee2013,Wallin2017}, but it has to our knowledge not been previously tested in protein folding simulations. The MS algorithm relies on sampling at fixed temperature a generalized ensemble in which the sequence is a dynamic parameter. Hence, there are two main types of updates: conformational updates $\rbar\rightarrow\rbar'$ and sequences updates $\sbar\rightarrow\sbar'$. As illustrated in Fig.~1, this approach requires that $\rbar$ and $\sbar$ are ``perpendicular" coordinates such that the potential energy of the model can be written in terms of two independent variables, $E(\sbar,\rbar)$. While this may be hard to achieve for detailed protein models, it is likely possible in many CG models.
 
-Here we explore a Monte Carlo (MC)-based algorithm for calculating the folding thermodynamics of multiple protein sequences in a single enhanced run. The algorithm relies on sampling at fixed temperature a generalized ensemble in which the sequence is treated as a dynamic parameter. Hence, this multisequence MC method includes two main types of updates: conformational updates $\rbar\rightarrow\rbar'$ and sequences updates $\sbar\rightarrow\sbar'$. As illustrated in Fig.~1, this approach requires that $\rbar$ and $\sbar$ are ``perpendicular" coordinates such that the potential energy of the model can be written in terms of two independent variables, $E(\sbar,\rbar)$. While this may be hard to achieve for detailed protein models, it is likely possible for many coarse-grained models. 
+As an initial test case, we apply the MS method to a set of 144 model sequences with 16 amino acids. This set, {\SR}, was constructed to sparsely cover the sequence space between two ideally designed sequences, A1 and N1, which fold into an $\alpha$-helix and $\beta$-hairpin, respectively, and allowed us to demonstrate the existence of A1-N1 mutational pathways which abruptly switch between the two structures and do not proceed through unstable sequences.~\cite{Holzgrafe2014} Here we use this set to validate the MS method and compare its efficiency to a standard generalized-ensemble methods, namely simulated tempering (ST).~\cite{Marinari1992,Lyubartsev1992} We thereafter apply the MS method to a greatly enlarged set with 1,024 sequences, also spanning the A1-N1 space, as well as another set spanning two 35-amino acid sequences, A2 and TN, folding into a two-helical bundle fold and a mixed $\alpha$-$\beta$ fold, respectively. Besides hinting at the feasibility of applying the MS method on large sets of sequences, the results allow us to carry out a more systematic analysis of the biophysical properties of sequences along mutational pathways connecting these two pairs of basic protein folds than has been possible with standard methods.~\cite{Holzgrafe2014,Holzgrafe2015} 
 
-We first apply the MS algorithm to a set of 144 model sequences with 16 amino acids and compare with the simulated tempering (ST) algorithm. We find that the computational efficiency of the MS algorithm is never less than ST except at the lowest studied temperature for one sequence. The model folds spontaneously designed sequences into stable native states with diverse protein-like structures, and captures features such as mutational robustness. It therefore provides a biophysical basis for the sequence-structure and sequence-stability relationships of proteins at a conceptual level. This model has been used, e.g., to study the sequence-structure relationship of proteins in the "marshlands" between protein folds. Experimental studies have indicated that single point mutations are capable of changing one protein fold into another. The multisequence algorithm allows us to characterize the stability and structure of all 1,024 sequences in the binary space between the two folds. The implication of these results for the fold switching and evolution is discussed. \\
+%We find that sequences become gradually less stable as they approach switch point. However, fold switching is observed to be typically abrupt at the switch point. Folding pathways usually pass through bistable sequences which populate both folds up to a significant level. We show that while bistable sequences become less when selecting more stable pathways for A1-N1 system, they generally remain the same for the A2-TN system.
 
-We then demonstrate that the multisequence algorithm can be used to calculate the thermodynamic behavior for $>1,000$ sequences in a 3-letter model for protein folding~\cite{Bhattacherjee2012} at temperatures well below the typical folding temperatures $T_\mathrm{f}$ of the included sequences.  
 
-While the 16-amino acid A1 and N1 sequences fold into $\alpha$-helical and $\beta$-hairpin folds, respectively, the two 35-amino acid sequences A2 and TN adopt the folds denoted IIA and IIB, as shown in Fig.~X. 
+%We first apply the MS algorithm to a set of 144 model sequences with 16 amino acids and compare with the simulated tempering (ST) algorithm. We find that the computational efficiency of the MS algorithm is never less than ST except at the lowest studied temperature for one sequence. 
 
-The large number of sequences considered allows us to carry out a much more systematic analysis than previously~\cite{Holzgrafe2014,Holzgrafe2015} of the sequence-structure-stability relationship in the sequence region that connect these two folds pairs. We find that sequences become gradually less stable as they approach switch point. However, fold switching is observed to be typically abrupt at the switch point. Folding pathways usually pass through bistable sequences which populate both folds up to a significant level. We show that while bistable sequences become less when selecting more stable pathways for A1-N1 system, they generally remain the same for the A2-TN system.
+
+
+%We then demonstrate that the multisequence algorithm can be used to calculate the thermodynamic behavior for $>1,000$ sequences in a 3-letter model for protein folding~\cite{Bhattacherjee2012} at temperatures well below the typical folding temperatures $T_\mathrm{f}$ of the included sequences.  
+
+%Modern investigations into biophysical properties of biomolecular systems are routinely carried out not only on a single species but on multiple molecular variants.~\cite{Vukmirovic2000,Nickson2010} For example, protein engineering methods are used to provide mechanistic insight into the specificity of protein-protein and protein-DNA interactions, to compare the  conformational propensities of disease-related mutations of aggregation-prone proteins, and optimize biomolecular properties through directed evolution. Moreover, large-scale screening techniques such as phage display and microarray chips are used to provide biophysical properties across entire genomes. In short, through the study of a biomolecular system and related variants molecular variants are studied in order to gain a more complete picture of the biophysical and biochemical properties of the system and provide evolutionary context. 
+
+%While protein or DNA sequences are easily changed on the computer, the high computational cost of simulating even a single moderately-sized biomolecule makes systematic explorations of sequence space challenging. Some notable efforts have nonetheless been attempted, including simulations of all 136 unique tetranucleotide sequences in B-DNA oligonucleotides using all-atom explicit water molecular dynamics.~\cite{Beveridge2004}
+
+
+
+%While the 16-amino acid A1 and N1 sequences fold into $\alpha$-helical and $\beta$-hairpin folds, respectively, the two 35-amino acid sequences A2 and TN adopt the folds denoted IIA and IIB, as shown in Fig.~X. 
+
 
 
 \begin{figure}
@@ -238,7 +248,7 @@ To assess the computational efficiency and properties of the multisequence algor
 
 \begin{figure}
 \includegraphics[width=8.0cm]{Stderr}
-\caption{Computational efficiency of the multisequence and simulated tempering algorithms for 4 sequences (A) A1, (B) N1, (C) R1 and (D) R2.}
+\caption{Comparing MS and ST algorithms. The statistical errors $\sigma_{\left < E\right >}$ of the average total energy $\left < E\right >$ are estimated with the two methods for the sequences (A) A1, (B) N1, (C) R1 and (D) R2. Simulation lengths are adjusted such that the number of conformations sampled per sequence and temperature is similar between in MS and ST runs. }
 \end{figure}
 
 

@@ -6,7 +6,7 @@
 %Control: page (0) single
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{18}%
+\begin{thebibliography}{34}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -50,57 +50,210 @@
 \providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
 \let\auto@bib@innerbib\@empty
 %</preamble>
-\bibitem [{\citenamefont {Vukmirovic}\ and\ \citenamefont
-  {Tilghman}(2000)}]{Vukmirovic2000}%
+\bibitem [{\citenamefont {Piana}, \citenamefont {Klepeis},\ and\ \citenamefont
+  {Shaw}(2014)}]{Piana2014}%
   \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {O.~G.}\ \bibnamefont
-  {Vukmirovic}}\ and\ \bibinfo {author} {\bibfnamefont {S.~M.}\ \bibnamefont
-  {Tilghman}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Nature}\ }\textbf {\bibinfo {volume} {405}},\ \bibinfo {pages} {820}
-  (\bibinfo {year} {2000})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Nickson}\ and\ \citenamefont
-  {Clarke}(2010)}]{Nickson2010}%
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Piana}}, \bibinfo {author} {\bibfnamefont {J.~L.}\ \bibnamefont {Klepeis}},
+  \ and\ \bibinfo {author} {\bibfnamefont {D.~E.}\ \bibnamefont {Shaw}},\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Curr Opin Struct
+  Biol}\ }\textbf {\bibinfo {volume} {24}},\ \bibinfo {pages} {98} (\bibinfo
+  {year} {2014})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Ding}\ \emph {et~al.}(2008)\citenamefont {Ding},
+  \citenamefont {Tsao}, \citenamefont {Nie},\ and\ \citenamefont
+  {Dokholyan}}]{Ding2008}%
   \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.~A.}\ \bibnamefont
-  {Nickson}}\ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {Clarke}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Methods}\ }\textbf {\bibinfo {volume} {52}},\ \bibinfo {pages} {38}
-  (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Beveridge}\ \emph {et~al.}(2004)\citenamefont
-  {Beveridge}, \citenamefont {Barreiro}, \citenamefont {Byun}, \citenamefont
-  {Case}, \citenamefont {Cheatham}, \citenamefont {Dixit}, \citenamefont
-  {Giudice}, \citenamefont {Lankas}, \citenamefont {Lavery}, \citenamefont
-  {Maddocks}, \citenamefont {Osman}, \citenamefont {Seibert}, \citenamefont
-  {Sklenar}, \citenamefont {Stoll}, \citenamefont {Thayer}, \citenamefont
-  {Varnai},\ and\ \citenamefont {Young}}]{Beveridge2004}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.~L.}\ \bibnamefont
-  {Beveridge}}, \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Barreiro}},
-  \bibinfo {author} {\bibfnamefont {K.~S.}\ \bibnamefont {Byun}}, \bibinfo
-  {author} {\bibfnamefont {D.~A.}\ \bibnamefont {Case}}, \bibinfo {author}
-  {\bibfnamefont {T.~E.}\ \bibnamefont {Cheatham}}, \bibinfo {author}
-  {\bibfnamefont {S.~B.}\ \bibnamefont {Dixit}}, \bibinfo {author}
-  {\bibfnamefont {E.}~\bibnamefont {Giudice}}, \bibinfo {author} {\bibfnamefont
-  {F.}~\bibnamefont {Lankas}}, \bibinfo {author} {\bibfnamefont
-  {R.}~\bibnamefont {Lavery}}, \bibinfo {author} {\bibfnamefont {J.~H.}\
-  \bibnamefont {Maddocks}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
-  {Osman}}, \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont {Seibert}},
-  \bibinfo {author} {\bibfnamefont {H.}~\bibnamefont {Sklenar}}, \bibinfo
-  {author} {\bibfnamefont {G.}~\bibnamefont {Stoll}}, \bibinfo {author}
-  {\bibfnamefont {K.~M.}\ \bibnamefont {Thayer}}, \bibinfo {author}
-  {\bibfnamefont {P.}~\bibnamefont {Varnai}}, \ and\ \bibinfo {author}
-  {\bibfnamefont {M.~A.}\ \bibnamefont {Young}},\ }\href@noop {} {\bibfield
-  {journal} {\bibinfo  {journal} {Biophys J}\ }\textbf {\bibinfo {volume}
-  {87}},\ \bibinfo {pages} {3799} (\bibinfo {year} {2004})}\BibitemShut
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
+  {Ding}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Tsao}}, \bibinfo
+  {author} {\bibfnamefont {H.}~\bibnamefont {Nie}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {N.~V.}\ \bibnamefont {Dokholyan}},\ }\href@noop {} {\bibfield
+   {journal} {\bibinfo  {journal} {Structure}\ }\textbf {\bibinfo {volume}
+  {16}},\ \bibinfo {pages} {1010} (\bibinfo {year} {2008})}\BibitemShut
   {NoStop}%
+\bibitem [{\citenamefont {Irb{\"a}ck}\ and\ \citenamefont
+  {Mohanty}(2006)}]{Irback2006}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Irb{\"a}ck}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Mohanty}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J
+  Comput Chem}\ }\textbf {\bibinfo {volume} {27}},\ \bibinfo {pages} {1548}
+  (\bibinfo {year} {2006})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Verma}\ and\ \citenamefont
+  {Wenzel}(2009)}]{Verma2009}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Verma}}\ and\ \bibinfo {author} {\bibfnamefont {W.}~\bibnamefont {Wenzel}},\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Biophys J}\
+  }\textbf {\bibinfo {volume} {96}},\ \bibinfo {pages} {3483} (\bibinfo {year}
+  {2009})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Yang}\ \emph {et~al.}(2007)\citenamefont {Yang},
+  \citenamefont {Chen}, \citenamefont {Skolnick},\ and\ \citenamefont
+  {Shakhnovich}}]{Yang2007}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~S.}\ \bibnamefont
+  {Yang}}, \bibinfo {author} {\bibfnamefont {W.~W.}\ \bibnamefont {Chen}},
+  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Skolnick}}, \ and\
+  \bibinfo {author} {\bibfnamefont {E.~I.}\ \bibnamefont {Shakhnovich}},\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Structure}\
+  }\textbf {\bibinfo {volume} {15}},\ \bibinfo {pages} {53} (\bibinfo {year}
+  {2007})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Bernardi}, \citenamefont {Melo},\ and\ \citenamefont
+  {Schulten}(2015)}]{Bernardi2015}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~C.}\ \bibnamefont
+  {Bernardi}}, \bibinfo {author} {\bibfnamefont {M.~C.}\ \bibnamefont {Melo}},
+  \ and\ \bibinfo {author} {\bibfnamefont {K.}~\bibnamefont {Schulten}},\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Biochim Biophys
+  Acta}\ }\textbf {\bibinfo {volume} {1850}},\ \bibinfo {pages} {872} (\bibinfo
+  {year} {2015})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {McGuffee}\ and\ \citenamefont
+  {Elcock}(2010)}]{McGuffee2010}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.~R.}\ \bibnamefont
+  {McGuffee}}\ and\ \bibinfo {author} {\bibfnamefont {A.~H.}\ \bibnamefont
+  {Elcock}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {PLOS
+  Comput Biol}\ }\textbf {\bibinfo {volume} {6}},\ \bibinfo {pages} {e1000694}
+  (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Perilla}\ \emph {et~al.}(2016)\citenamefont
+  {Perilla}, \citenamefont {Hadden}, \citenamefont {Goh}, \citenamefont
+  {Mayne},\ and\ \citenamefont {Schulten}}]{Perilla2016}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~R.}\ \bibnamefont
+  {Perilla}}, \bibinfo {author} {\bibfnamefont {J.~A.}\ \bibnamefont {Hadden}},
+  \bibinfo {author} {\bibfnamefont {B.~C.}\ \bibnamefont {Goh}}, \bibinfo
+  {author} {\bibfnamefont {C.~G.}\ \bibnamefont {Mayne}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {K.}~\bibnamefont {Schulten}},\ }\href@noop {}
+  {\bibfield  {journal} {\bibinfo  {journal} {J Phys Chem Lett}\ }\textbf
+  {\bibinfo {volume} {7}},\ \bibinfo {pages} {1836} (\bibinfo {year}
+  {2016})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Lindorff-Larsen}\ \emph {et~al.}(2011)\citenamefont
+  {Lindorff-Larsen}, \citenamefont {Piana}, \citenamefont {Dror},\ and\
+  \citenamefont {Shaw}}]{Lindorff-Larsen2011}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {K.}~\bibnamefont
+  {Lindorff-Larsen}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Piana}}, \bibinfo {author} {\bibfnamefont {R.~O.}\ \bibnamefont {Dror}}, \
+  and\ \bibinfo {author} {\bibfnamefont {D.~E.}\ \bibnamefont {Shaw}},\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Science}\ }\textbf
+  {\bibinfo {volume} {334}},\ \bibinfo {pages} {517} (\bibinfo {year}
+  {2011})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Yu}\ \emph {et~al.}(2016)\citenamefont {Yu},
+  \citenamefont {Mori}, \citenamefont {Ando}, \citenamefont {Harada},
+  \citenamefont {Jung}, \citenamefont {Sugita},\ and\ \citenamefont
+  {Feig}}]{Yu2016}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {I.}~\bibnamefont
+  {Yu}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Mori}}, \bibinfo
+  {author} {\bibfnamefont {T.}~\bibnamefont {Ando}}, \bibinfo {author}
+  {\bibfnamefont {R.}~\bibnamefont {Harada}}, \bibinfo {author} {\bibfnamefont
+  {J.}~\bibnamefont {Jung}}, \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont
+  {Sugita}}, \ and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Feig}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {ELife}\
+  }\textbf {\bibinfo {volume} {5}} (\bibinfo {year} {2016})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Riniker}, \citenamefont {Allison},\ and\
+  \citenamefont {van Gunsteren}(2012)}]{Riniker2012}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Riniker}}, \bibinfo {author} {\bibfnamefont {J.~R.}\ \bibnamefont
+  {Allison}}, \ and\ \bibinfo {author} {\bibfnamefont {W.~F.}\ \bibnamefont
+  {van Gunsteren}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
+  {Phys Chem Chem Phys}\ }\textbf {\bibinfo {volume} {14}},\ \bibinfo {pages}
+  {12423} (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Ing{'/o}lfsson}\ \emph {et~al.}(2014)\citenamefont
+  {Ing{'/o}lfsson}, \citenamefont {Lopez}, \citenamefont {Uusitalo},
+  \citenamefont {Gopal}, \citenamefont {Periole},\ and\ \citenamefont
+  {Marrink}}]{Ingolfsson2014}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {H.~I.}\ \bibnamefont
+  {Ing{'/o}lfsson}}, \bibinfo {author} {\bibfnamefont {C.~A.}\ \bibnamefont
+  {Lopez}}, \bibinfo {author} {\bibfnamefont {D.~H.}\ \bibnamefont {Uusitalo},
+  \bibfnamefont {J.~J. de~Jong}}, \bibinfo {author} {\bibfnamefont {S.~M.}\
+  \bibnamefont {Gopal}}, \bibinfo {author} {\bibfnamefont {X.}~\bibnamefont
+  {Periole}}, \ and\ \bibinfo {author} {\bibfnamefont {S.~J.}\ \bibnamefont
+  {Marrink}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {WIREs
+  Comput Mol Sci}\ }\textbf {\bibinfo {volume} {4}},\ \bibinfo {pages} {225}
+  (\bibinfo {year} {2014})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Beland}\ \emph {et~al.}(2011)\citenamefont {Beland},
+  \citenamefont {Brommer}, \citenamefont {El-Mellouhi}, \citenamefont {Joly},\
+  and\ \citenamefont {Mousseau}}]{Beland2011}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {L.~K.}\ \bibnamefont
+  {Beland}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {Brommer}},
+  \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont {El-Mellouhi}}, \bibinfo
+  {author} {\bibfnamefont {J.~F.}\ \bibnamefont {Joly}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {N.}~\bibnamefont {Mousseau}},\ }\href@noop {}
+  {\bibfield  {journal} {\bibinfo  {journal} {Phys Rev E}\ }\textbf {\bibinfo
+  {volume} {84}},\ \bibinfo {pages} {046704} (\bibinfo {year}
+  {2011})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Proctor}, \citenamefont {Ding},\ and\ \citenamefont
+  {Dokholyan}(2011)}]{Proctor2011}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.~A.}\ \bibnamefont
+  {Proctor}}, \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont {Ding}}, \
+  and\ \bibinfo {author} {\bibfnamefont {N.~V.}\ \bibnamefont {Dokholyan}},\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {WIREs Comput Mol
+  Sci}\ }\textbf {\bibinfo {volume} {1}},\ \bibinfo {pages} {80} (\bibinfo
+  {year} {2011})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Vitalis}\ and\ \citenamefont
+  {Pappu}(2009)}]{Vitalis2009}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Vitalis}}\ and\ \bibinfo {author} {\bibfnamefont {R.~V.}\ \bibnamefont
+  {Pappu}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Annu
+  Rep Comput Chem}\ }\textbf {\bibinfo {volume} {5}},\ \bibinfo {pages} {49}
+  (\bibinfo {year} {2009})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Zarrinpar}, \citenamefont {Park},\ and\ \citenamefont
+  {Lim}(2003)}]{Zarrinpar2003}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Zarrinpar}}, \bibinfo {author} {\bibfnamefont {S.~H.}\ \bibnamefont {Park}},
+  \ and\ \bibinfo {author} {\bibfnamefont {W.~A.}\ \bibnamefont {Lim}},\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Nature}\ }\textbf
+  {\bibinfo {volume} {426}},\ \bibinfo {pages} {676} (\bibinfo {year}
+  {2003})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Tzul}, \citenamefont {Vasilchuk},\ and\ \citenamefont
+  {Makhatadze}(2017)}]{Tzul2017}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.~O.}\ \bibnamefont
+  {Tzul}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Vasilchuk}}, \
+  and\ \bibinfo {author} {\bibfnamefont {G.~I.}\ \bibnamefont {Makhatadze}},\
+  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Proc Natl Acad Sci
+  USA}\ }\textbf {\bibinfo {volume} {114}},\ \bibinfo {pages} {E1627} (\bibinfo
+  {year} {2017})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Wensley}\ \emph {et~al.}(2010)\citenamefont
+  {Wensley}, \citenamefont {Batey}, \citenamefont {Bone}, \citenamefont {Chan},
+  \citenamefont {Tumelty}, \citenamefont {Steward}, \citenamefont {Kwa},
+  \citenamefont {Borgia},\ and\ \citenamefont {Clarke}}]{Wensley2010}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.~G.}\ \bibnamefont
+  {Wensley}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Batey}},
+  \bibinfo {author} {\bibfnamefont {F.~A.}\ \bibnamefont {Bone}}, \bibinfo
+  {author} {\bibfnamefont {Z.~M.}\ \bibnamefont {Chan}}, \bibinfo {author}
+  {\bibfnamefont {N.~R.}\ \bibnamefont {Tumelty}}, \bibinfo {author}
+  {\bibfnamefont {A.}~\bibnamefont {Steward}}, \bibinfo {author} {\bibfnamefont
+  {L.~G.}\ \bibnamefont {Kwa}}, \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Borgia}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {J.}~\bibnamefont {Clarke}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo
+  {journal} {Nature}\ }\textbf {\bibinfo {volume} {463}},\ \bibinfo {pages}
+  {685} (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
+\bibitem [{Irb()}]{Irback1995}%
+  \BibitemOpen
+  \href@noop {} {\ }\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Bhattacherjee}\ and\ \citenamefont
-  {Wallin}(2012)}]{Bhattacherjee2012}%
+  {Wallin}(2013)}]{Bhattacherjee2013}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
   {Bhattacherjee}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {PLOS
+  Comput Biol}\ }\textbf {\bibinfo {volume} {9}},\ \bibinfo {pages} {e1003277}
+  (\bibinfo {year} {2013})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Wallin}(2017)}]{Wallin2017}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
   {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Biophys J}\ }\textbf {\bibinfo {volume} {102}},\ \bibinfo {pages} {569}
-  (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
+  {Methods Mol Biol}\ }\textbf {\bibinfo {volume} {1561}},\ \bibinfo {pages}
+  {201} (\bibinfo {year} {2017})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Holzgr{\"a}fe}\ and\ \citenamefont
   {Wallin}(2014)}]{Holzgrafe2014}%
   \BibitemOpen
@@ -146,19 +299,13 @@
   {journal} {J. Comp. Phys.}\ }\textbf {\bibinfo {volume} {96}},\ \bibinfo
   {pages} {1776} (\bibinfo {year} {1992})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Bhattacherjee}\ and\ \citenamefont
-  {Wallin}(2013)}]{Bhattacherjee2013}%
+  {Wallin}(2012)}]{Bhattacherjee2012}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
   {Bhattacherjee}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {PLOS
-  Comput Biol}\ }\textbf {\bibinfo {volume} {9}},\ \bibinfo {pages} {e1003277}
-  (\bibinfo {year} {2013})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Wallin}(2017)}]{Wallin2017}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
   {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Methods Mol Biol}\ }\textbf {\bibinfo {volume} {1561}},\ \bibinfo {pages}
-  {201} (\bibinfo {year} {2017})}\BibitemShut {NoStop}%
+  {Biophys J}\ }\textbf {\bibinfo {volume} {102}},\ \bibinfo {pages} {569}
+  (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Favrin}, \citenamefont {Irb{\"a}ck},\ and\
   \citenamefont {Sjunnesson}(2001)}]{Favrin2001}%
   \BibitemOpen
