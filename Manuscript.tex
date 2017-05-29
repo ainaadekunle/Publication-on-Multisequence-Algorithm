@@ -144,9 +144,9 @@ where  $\beta_m=1/k_\mathrm{B} T_m$, $\{T_m\}_{m=1}^\mathrm{M}$ a set of tempera
 \end{equation}
 where the first sum is over all conformations $\rbar$. The simulation parameters $g_m$ control the marginal probability distribution
 \begin{equation}
-P(k) = \frac{1}{\hat{Z}}\sum_r e^{-\beta_m E(\rbar) + g_m} \,,
+P(m) = \frac{1}{\hat{Z}}\sum_r e^{-\beta_m E(\rbar) + g_m} \,,
 \end{equation}
-and must therefore be carefully chosen. A common and convenient choice is $g_m\approx \beta_m F_m$, where $F_m$ is the free energy at temperature $T_m$. With this choice, $P(k)$ becomes approximately flat ensuring all temperatures are frequently visited. 
+and must therefore be carefully chosen. A common and convenient choice is $g_m\approx \beta_m F_m$, where $F_m$ is the free energy at temperature $T_m$. With this choice, $P(m)$ becomes approximately flat ensuring all temperatures are frequently visited. 
 
 \subsection{Multisequence algorithm}
 \noindent 
@@ -179,13 +179,13 @@ This geometrical description is paired with a simplified but finely tuned energy
 
 \subsection{Model sequences}
 
-The sequences studied in this work are summarized in Table~I. 
+Six model sequences studied in this work are summarized in Table~I. In addition, we study two sets of 1,024 sequences derived from the A1-N1 and A2-TN pairs (see text) denoted $\mathrm{S16}_{1024}$  and $\mathrm{S35}_{1024}$, respectively, and a restricted set $\mathrm{S16}_{144}$ with 144 sequences taken from $\mathrm{S16}_{1024}$ ($\mathrm{S16}_{144}$ was also studied in Ref.~\protect\citenum{Holzgrafe2014}).
  
 \begin{table}
-\caption{\label{tab1} List of model sequences of different lengths $N$ studied in this work.}
+\caption{\label{tab1} List of 6 model sequences of different lengths $N$ studied in this work.}
 \begin{ruledtabular}
 \begin{tabular}{lcr}
-Name & $N$ & Sequence\footnote{In addition, we study two sets of 1,024 sequences derived from the A1-N1 and A2-TN pairs (see text) denoted $\mathrm{S16}_{1024}$  and $\mathrm{S35}_{1024}$, respectively, and a restricted set $\mathrm{S16}_{144}$ with 144 sequences taken from $\mathrm{S16}_{1024}$ ($\mathrm{S16}_{144}$ was also studied in Ref.~\protect\citenum{Holzgrafe2014}). } \\
+Name & $N$ & Sequence \\
 \hline
 A1 & 16 & pphpphhpphpphhpp \\
 N1 & 16 & phphphpttphphphp \\
@@ -206,13 +206,13 @@ Both ST and MS simulations are carried out with two types of conformational upda
 \caption{\label{tab2} List of simulations carried out in this work. }
 \begin{ruledtabular}
 \begin{tabular}{lccccr}
-Runs & Algorithm & $\kb T$  & MC steps/run &  Sequences\\
+Runs & Algorithm & $\kb T$  & MC steps/run\footnote{Excludes thermalization with $10^6$ MC steps.} &  Sequences\\
 \hline
-32 & ST & 0.43--0.65 & $8\times 10^6$ &A1\\ 
-32 & ST & 0.43--0.65 & $8\times 10^6$ &N1\\ 
-32 & ST & 0.43--0.65 & $8\times 10^6$ &R1\\ 
-32 & ST & 0.43--0.65 & $8\times 10^6$ &R2\\ 
-32$\times$8\footnote{32  runs per temperature for 8 temperatures in the range given.} & MS &0.43--0.65& $144\times 10^6$ & $\mathrm{S16}_{144}$\\
+32 & ST & 0.43--0.65 & $10^7$ &A1\\ 
+32 & ST & 0.43--0.65 & $10^7$ &N1\\ 
+32 & ST & 0.43--0.65 & $10^7$ &R1\\ 
+32 & ST & 0.43--0.65 & $10^7$ &R2\\ 
+32$\times$8\footnote{32  runs per temperature for 8 temperatures in the range given.} & MS &0.43--0.65& $18\times 10^7$ & $\mathrm{S16}_{144}$\\
 16 & MS & 0.43  & $5\times 10^9$ &  $\mathrm{S16}_{1024}$ \\
 16 & MS & 0.46 & $4\times 10^9$ &  $\mathrm{S35}_{1024}$ \\
 \end{tabular}
@@ -270,9 +270,8 @@ There is a sequence-dependent statistical trend observed in Figure 6. As tempera
 Insight from the statistical measurements suggests that the MS algorithm has a similar computational efficiency at $high_T$ and even better at lower T's. The MS algorithm is able to achieve  better efficency by sampling a wider region of both conformational and sequence space. Sampling the sequence space in addition to conformational space ensures a decorrelated ensemble of states is generated.
 
 \begin{figure*}
-\rotatebox{0}{\includegraphics[width=16.6cm]{ntwk16}}\\
-\rotatebox{0}{\includegraphics[width=12.6cm]{ntwk35}}
-\caption{Networks of the A1-N1 (top) and A2-TN (bottom) binary sequence space showing the possible stable pathways from one fold to another. }
+\rotatebox{0}{\includegraphics[width=16.6cm]{network}}
+\caption{Networks of the A1-N1 (top) and A2-TN (bottom) binary sequence space showing the possible stable pathways from one fold to another. (light blue) Fold A, (dark red) Fold B, and (black) Bistable. }
 \end{figure*}
 
 Hence, we conclude that in the comparison made above the computational efficiency of the MS algorithm is comparable to ST. It must be stressed, however, that while the ST simulation requires that the thermodynamic behavior is calculated at a range of temperatures, MS works well on its own directly at low temperatures. ST was introduced as an extension to the standard, fixed-$T$ Metropolis-Hastings algorithm in order to overcome the poor mixing of states at low temperatures, i.e., the tendency for the simulations at low $T$ to become trapped in local free energy minima. The MS algorithm, however, efficiently calculates the thermodynamics at low $T$'s without visits to other $T$'s. In the MS algorithm, it is visits to sequences with poor native state stability rather than high $T$'s that drive the decorrelation of generated states and escape from local traps. This way, calculation of low-$T$ thermodynamics is enhanced in MS simulations while at the same time enhancing coverage in sequence space. This makes the MS algorithm ideal for situations in which the finite-$T$ thermodynamic behavior of multiple sequences are of interest. 
@@ -335,6 +334,8 @@ The MS method should not be seen as a general method to speed up conformational 
 \section{Conclusion}
 \noindent
 We have evaluated an algorithm for coarse-grained biomolecular simulations that allow the thermodynamics of multiple different sequences to be calculated in a single run. Here we showed that with this MS algorithm, the folding thermodynamics of over 1,000 amino acid sequences with each 35 amino acids could be determined in a coarse-grained model with 3 amino acid types. In addition to being convenient for calculations of multiple sequences, the method enhances conformational sampling with an efficiency comparable to simulated tempering. Random walks across sequence space allow both sampling of many sequences and efficient escape from local free energy minima in the free energy landscape. The method might be well suited for coarse-grained simulations of other biomolecular systems, such as phospholipid bilayers. 
+
+
 
 \bibliography{/Users/stefan/Documents/Manuscripts/Jshort,/Users/stefan/Documents/Manuscripts/MyRefs}
 
