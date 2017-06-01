@@ -160,20 +160,21 @@
   {van Gunsteren}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
   {Phys Chem Chem Phys}\ }\textbf {\bibinfo {volume} {14}},\ \bibinfo {pages}
   {12423} (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Ing{'/o}lfsson}\ \emph {et~al.}(2014)\citenamefont
-  {Ing{'/o}lfsson}, \citenamefont {Lopez}, \citenamefont {Uusitalo},
-  \citenamefont {Gopal}, \citenamefont {Periole},\ and\ \citenamefont
-  {Marrink}}]{Ingolfsson2014}%
+\bibitem [{\citenamefont {Ing{\'{o}}lfsson}\ \emph {et~al.}(2014)\citenamefont
+  {Ing{\'{o}}lfsson}, \citenamefont {Lopez}, \citenamefont {Uusitalo},
+  \citenamefont {{de Jong}}, \citenamefont {Gopal}, \citenamefont {Periole},\
+  and\ \citenamefont {Marrink}}]{Ingolfsson2014}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {H.~I.}\ \bibnamefont
-  {Ing{'/o}lfsson}}, \bibinfo {author} {\bibfnamefont {C.~A.}\ \bibnamefont
-  {Lopez}}, \bibinfo {author} {\bibfnamefont {D.~H.}\ \bibnamefont {Uusitalo},
-  \bibfnamefont {J.~J. de~Jong}}, \bibinfo {author} {\bibfnamefont {S.~M.}\
-  \bibnamefont {Gopal}}, \bibinfo {author} {\bibfnamefont {X.}~\bibnamefont
-  {Periole}}, \ and\ \bibinfo {author} {\bibfnamefont {S.~J.}\ \bibnamefont
-  {Marrink}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {WIREs
-  Comput Mol Sci}\ }\textbf {\bibinfo {volume} {4}},\ \bibinfo {pages} {225}
-  (\bibinfo {year} {2014})}\BibitemShut {NoStop}%
+  {Ing{\'{o}}lfsson}}, \bibinfo {author} {\bibfnamefont {C.~A.}\ \bibnamefont
+  {Lopez}}, \bibinfo {author} {\bibfnamefont {J.~J.}\ \bibnamefont {Uusitalo}},
+  \bibinfo {author} {\bibfnamefont {D.~H.}\ \bibnamefont {{de Jong}}}, \bibinfo
+  {author} {\bibfnamefont {S.~M.}\ \bibnamefont {Gopal}}, \bibinfo {author}
+  {\bibfnamefont {X.}~\bibnamefont {Periole}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {S.~J.}\ \bibnamefont {Marrink}},\ }\href@noop {} {\bibfield
+  {journal} {\bibinfo  {journal} {WIREs Comput Mol Sci}\ }\textbf {\bibinfo
+  {volume} {4}},\ \bibinfo {pages} {225} (\bibinfo {year} {2014})}\BibitemShut
+  {NoStop}%
 \bibitem [{\citenamefont {Beland}\ \emph {et~al.}(2011)\citenamefont {Beland},
   \citenamefont {Brommer}, \citenamefont {El-Mellouhi}, \citenamefont {Joly},\
   and\ \citenamefont {Mousseau}}]{Beland2011}%
