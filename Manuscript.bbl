@@ -286,6 +286,14 @@
   {Tilghman}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
   {Nature}\ }\textbf {\bibinfo {volume} {405}},\ \bibinfo {pages} {820}
   (\bibinfo {year} {2000})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Bhattacherjee}\ and\ \citenamefont
+  {Wallin}(2012)}]{Bhattacherjee2012}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Bhattacherjee}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
+  {Biophys J}\ }\textbf {\bibinfo {volume} {102}},\ \bibinfo {pages} {569}
+  (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Irb{\"a}ck}\ and\ \citenamefont
   {Potthast}(1995)}]{Irback1995}%
   \BibitemOpen
@@ -308,14 +316,6 @@
   {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
   {Methods Mol Biol}\ }\textbf {\bibinfo {volume} {1561}},\ \bibinfo {pages}
   {201} (\bibinfo {year} {2017})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Bhattacherjee}\ and\ \citenamefont
-  {Wallin}(2012)}]{Bhattacherjee2012}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Bhattacherjee}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Biophys J}\ }\textbf {\bibinfo {volume} {102}},\ \bibinfo {pages} {569}
-  (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Holzgr{\"a}fe}\ and\ \citenamefont
   {Wallin}(2014)}]{Holzgrafe2014}%
   \BibitemOpen
@@ -324,14 +324,6 @@
   {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
   {Biophys J}\ }\textbf {\bibinfo {volume} {107}},\ \bibinfo {pages} {1217}
   (\bibinfo {year} {2014})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Holzgr{\"a}fe}\ and\ \citenamefont
-  {Wallin}(2015)}]{Holzgrafe2015}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
-  {Holzgr{\"a}fe}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys
-  Biol}\ }\textbf {\bibinfo {volume} {12}},\ \bibinfo {pages} {026002}
-  (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Bryan}\ and\ \citenamefont
   {Orban}(2010)}]{Bryan2010}%
   \BibitemOpen
@@ -377,6 +369,14 @@
   }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J. Comp. Phys.}\
   }\textbf {\bibinfo {volume} {114}},\ \bibinfo {pages} {8154} (\bibinfo {year}
   {2001})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Holzgr{\"a}fe}\ and\ \citenamefont
+  {Wallin}(2015)}]{Holzgrafe2015}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Holzgr{\"a}fe}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys
+  Biol}\ }\textbf {\bibinfo {volume} {12}},\ \bibinfo {pages} {026002}
+  (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Gelman}, \citenamefont {Roberts},\ and\ \citenamefont
   {Gilks}(1996)}]{Gilks1996}%
   \BibitemOpen
