@@ -35,6 +35,7 @@ reprint,%
 \usepackage{graphicx}% Include figure files
 \usepackage{dcolumn}% Align table columns on decimal point
 \usepackage{bm}% bold math
+\usepackage{color}
 %\usepackage[mathlines]{lineno}% Enable numbering of text and display math
 %\linenumbers\relax % Commence numbering lines
 
@@ -89,17 +90,21 @@ We consider a generalized-ensemble algorithm for coarse-grained simulations of b
 
 \section{Introduction}
 
-Recent years have seen important advances in biomolecular simulation methods, including improvements to standard molecular dynamics force fields,~\cite{Piana2014} the advent of several alternative atomistic simulation approaches,~\cite{Ding2008,Irback2006,Verma2009,Yang2007} and new techniques for  conformational sampling.~\cite{Bernardi2015} Together with the ever-increasing availability of computational resources, these advances have triggered a few major efforts~\cite{McGuffee2010,Miao2010,Perilla2016,Lindorff-Larsen2011,Yu2016} to characterize the dynamics of biomolecular systems of various sizes, e.g., a small native protein on the millisecond scale~\cite{Lindorff-Larsen2011} and a comprehensive model cytoplasm on the nanosecond scale.~\cite{Yu2016} While encouraging and insightful, these large-scale simulations have also highlighted the fact that severe tradeoffs in size and time scales will likely persist for the foreseeable future. 
+Recent years have seen important advances in biomolecular simulation methods, including improvements to standard molecular dynamics force fields,~\cite{Piana2014} the advent of several alternative atomistic simulation approaches,~\cite{Ding2008,Irback2006,Verma2009,Yang2007} and new techniques for  conformational sampling.~\cite{Bernardi2015} Together with the ever-increasing availability of computational resources, these advances have triggered a few major efforts~\cite{McGuffee2010,Miao2010,Perilla2016,Lindorff-Larsen2011,Yu2016} to characterize the dynamics of biomolecular systems of various sizes, e.g., a small native protein on the millisecond scale~\cite{Lindorff-Larsen2011} and a comprehensive model cytoplasm on the nanosecond scale.~\cite{Yu2016} While encouraging and insightful, these large-scale simulations have also highlighted that severe tradeoffs in size and time scales will likely persist for the foreseeable future. 
 
-One way to expand the range of biomolecular simulations is to turn to coarse-grained (CG) models, where the basic aim is to simplify the physical description of interactions while retaining the essential physics of the system under study.~\cite{Riniker2012} Ingolfsson \textit{et al.} list 4 main factors that make CG models computationally fast: reduction in the number of degrees of freedom, faster simulation dynamics, emphasis on short-range interactions and the ability of using larger integration time steps.~\cite{Ingolfsson2014} To this list can be added that a CG representation of either the interaction potential or the molecular geometry often opens up for alternative sampling schemes beyond traditional molecular dynamics approaches, which can further speed up conformational sampling. Examples of such sampling schemes include activation-relaxation kinetics,~\cite{Beland2011} discrete molecular dynamics~\cite{Proctor2011} and various Monte Carlo (MC)-based techniques such as cluster moves.~\cite{Vitalis2009} 
+One way to expand the range of biomolecular simulations is to turn to coarse-grained (CG) models, where the basic aim is to simplify the description of physical interactions while retaining the essential physics of the system under study.~\cite{Riniker2012} Ingolfsson \textit{et al.} list 4 main factors that make CG models computationally fast: reduction in the number of degrees of freedom, faster simulation dynamics, emphasis on short-range interactions and the ability of using larger integration time steps.~\cite{Ingolfsson2014} To this list can be added that a CG representation of either the interaction potential or the molecular geometry often opens up for alternative sampling schemes beyond traditional molecular dynamics approaches, which can further speed up conformational sampling. Examples of such sampling schemes include activation-relaxation kinetics,~\cite{Beland2011} discrete molecular dynamics~\cite{Proctor2011} and various Monte Carlo (MC)-based techniques such as cluster moves.~\cite{Vitalis2009} 
 
 The challenges of achieving representative conformational sampling of individual biomolecular systems notwithstanding, many biologically motivated problems naturally call for the investigation and comparison of molecular variants, e.g., determining the molecular mechanisms of specificity in protein-protein~\cite{Zarrinpar2003,Hakes2007} or protein-nucleotide~\cite{Rohs2010} interactions, or the role of mutations in molecular disease processes.~\cite{Ross2004} Another example is protein folding, where unique insight has been achieved by comparing sequences within and between protein families.~\cite{Tzul2017,Wensley2010} In a situation with extremely rapid growth of sequence information,~\cite{Vukmirovic2000} it is of interest to explore ways to efficiently sample multiple sequences in biomolecular simulations. 
 
 To this end, we consider in this work an MC-based algorithm that can calculate the thermodynamics of multiple sequences in a single run and apply it to a coarse-grained model for protein folding.~\cite{Bhattacherjee2012} This multisequence (MS) method was originally developed in the context of homo- and heteropolymer simulations~\cite{Irback1995} and was later adapted for the characterization of peptide-protein binding specificity.~\cite{Bhattacherjee2013,Wallin2017} To our knowledge, it has not been previously tested in realistic protein folding simulations. The MS algorithm carries out a simulation in a generalized ensemble that performs a random walk in sequence space. Hence, there are two main types of updates: conformational updates $\rbar\rightarrow\rbar'$ and sequence updates $\sbar\rightarrow\sbar'$. This strategy is straightforward when $\rbar$ and $\sbar$ are ``perpendicular" coordinates, as illustrated in Fig.~1,  such that the potential energy of the model can be written in terms of two independent variables, $E(\sbar,\rbar)$. 
 
-%While this may be hard to achieve for detailed biomolecular models, it is likely possible in many CG models.
+{\color{red} As a test case for the MS algorithm, we selected the phenomenon of protein fold switching~\cite{Bryan2010} which has been recently demonstrated in a handful of natural and engineered proteins. These special proteins exhibit a unique ability to reversibly switch between different folds with accompanying changes in secondary structure, hydrophobic core packing and overall shape. Fold switching in proteins often plays a functional role. For example, rare transitions to an alternative fold in the protein KaiB provide a crucial time delay mechanism in the circadian clock cycle of cyanobacteria.~\cite{LiWang2015} Fold switching can be triggered by various events including changes to solution conditions,~\cite{Kuloglu2002} subdomain detachment,~\cite{Burmann2012} ligand binding~\cite{Luo2004} and point mutations.~\cite{Alexander2009} }
 
-As an initial test case, we apply the MS method to a set of 144 model protein sequences with 16 amino acids. This set (denoted here {\SR}) was constructed to sparsely cover the sequence space between two ideally designed sequences, A1 and N1, which fold into an $\alpha$-helix and a $\beta$-hairpin,~\cite{Bhattacherjee2012} respectively, as shown in Fig.~2. In a previous work, this set allowed us to demonstrate the existence of A1-N1 mutational pathways which do not proceed through any disordered (non-folding) sequences but instead switch abruptly between the two folds in a single mutational step.~\cite{Holzgrafe2014} Such an ability to reversibly switch folds was recently demonstrated in a handful of natural and engineered proteins.~\cite{Bryan2010} Here we use the set {\SR} and our CG model for protein folding to validate the MS method and compare its efficiency to a standard generalized-ensemble method.~\cite{Marinari1992,Lyubartsev1992} We thereafter greatly enlarge {\SR} to a set with 1,024 sequences, also spanning the A1-N1 space, as well as another set of the same size spanning two 35-amino acid sequences, A2 and TN, that fold into two-helical bundle and mixed $\alpha$-$\beta$ structures, respectively (see Fig.~2). Besides demonstrating that the MS method can be applied to large numbers of sequences, the results allow us to carry out a more systematic analysis of the biophysical properties of sequences along mutational pathways connecting these two pairs of basic folds than has been previously possible. 
+{\color{red} The discovery that abrupt and major changes in the 3-dimensional structures of proteins can be driven by the accumulation of point mutations, in particular, holds implications for protein evolution as it suggests a simple mechanism of fold evolution. The A and B domains of protein G fold into 3$\alpha$ and 4$\beta+\alpha$ structures, respectively,~\cite{Alexander2009} and are thus unrelated in both structure and sequence. Yet Alexander \textit{et al.}~\cite{Alexander2009} demonstrated that, after extensive initial mutations to both domains that left their respective folds undisturbed, a single additional mutation triggered an abrupt fold switch. This possibility suggests a potential evolutionary relationship between these two domains despite the lack of detectable similarity in both sequence or structure in wild-type protein G.~\cite{He2012} It is still unclear, however, how common such fold-to-fold mutational pathways are in evolutionary processes. We showed previously~\cite{Holzgrafe2014,Holzgrafe2015} that, within the model framework provided by our CG model,~\cite{Bhattacherjee2012} there are mutational paths between elementary protein folds that do not proceed through any disordered (non-folding) sequences. Instead, these paths exhibit abruptly switching between folds in a single, or very few, mutational steps similarly to the A and B domains of protein G. }
+
+In demonstrating this fold-switching behavior in our model we characterized the folding of a set of 144 different model sequences with 16 amino acids. This set (denoted here {\SR}) was constructed to sparsely span the sequence space between two ideally designed sequences, A1 and N1, folding into an $\alpha$-helix and a $\beta$-hairpin, respectively, as shown in Fig.~2. Here we use the set {\SR} to validate the MS method and compare its computational efficiency to a standard generalized-ensemble method.~\cite{Marinari1992,Lyubartsev1992} We thereafter greatly enlarge {\SR} to a set with 1,024 sequences as well as another set of the same size spanning two 35-amino acid sequences, A2 and TN, that fold into two-helical bundle and mixed $\alpha$-$\beta$ structures, respectively (see Fig.~2). Besides demonstrating that the MS method can be applied to large numbers of sequences, the results allow us to carry out a more systematic analysis of the biophysical properties of sequences along mutational pathways connecting these two pairs of basic folds than has been previously possible. 
+
+%As an initial test case, we apply the MS method to a set of 144 model protein sequences with 16 amino acids. This set (denoted here {\SR}) was constructed to sparsely cover the sequence space between two ideally designed sequences, A1 and N1, which fold into an $\alpha$-helix and a $\beta$-hairpin,~\cite{Bhattacherjee2012} respectively, as shown in Fig.~2. In a previous work, this set allowed us to demonstrate the existence of A1-N1 mutational pathways which do not proceed through any disordered (non-folding) sequences but instead switch abruptly between the two folds in a single mutational step.~\cite{Holzgrafe2014} Such an ability to reversibly switch folds was recently demonstrated in a handful of natural and engineered proteins.~\cite{Bryan2010} Here we use the set {\SR} and our CG model for protein folding to validate the MS method and compare its efficiency to a standard generalized-ensemble method.~\cite{Marinari1992,Lyubartsev1992} We thereafter greatly enlarge {\SR} to a set with 1,024 sequences, also spanning the A1-N1 space, as well as another set of the same size spanning two 35-amino acid sequences, A2 and TN, that fold into two-helical bundle and mixed $\alpha$-$\beta$ structures, respectively (see Fig.~2). Besides demonstrating that the MS method can be applied to large numbers of sequences, the results allow us to carry out a more systematic analysis of the biophysical properties of sequences along mutational pathways connecting these two pairs of basic folds than has been previously possible. 
 
 \begin{figure}
 \includegraphics[width=4.2cm]{./Fig1}
@@ -129,20 +134,21 @@ and must therefore be carefully chosen. A common and convenient choice is $g_m\a
 
 \subsection{Multisequence algorithm}
  
-The basic idea of the MS algorithm for biomolecular simulation is to let the sequence $\sbar$ become a dynamic parameter rather than the temperature as in ST. A dynamic $\sbar$ is technically feasible when the potential energy can be written as $E(\sbar,\rbar)$, where $\sbar$ and $\rbar$ are independent variables. This is the case in our coarse-grained protein model which has only backbone degrees of freedom. It can also be achieved for in some more detailed models.~\cite{Bhattacherjee2013,Wallin2017} 
+The basic idea of the MS algorithm for biomolecular simulation is to let the sequence $\sbar$ become a dynamic parameter rather than the temperature as in ST. A dynamic $\sbar$ is technically feasible when the potential energy can be written as $E(\sbar,\rbar)$, where $\sbar$ and $\rbar$ are independent variables. This is the case in our coarse-grained protein model which has only backbone degrees of freedom. It can also be achieved in some more detailed models.~\cite{Bhattacherjee2013,Wallin2017} 
 
 Similarly to ST, the MS algorithm simulates the joint probability distribution
 \begin{equation}
 P(\sbar,\rbar) =\dfrac{1}{Z}e^{-\beta E(\sbar,\rbar) + h(\sbar)}\,, 
 \label{MS}
 \end{equation}
-where  
+where  {\color{red}
 \begin{equation}
-Z = \sum_{\sbar}\sum_{\rbar} e^{-\beta E(\sbar,\rbar)+ h(\sbar)}\,
+Z = \sum_{\sbar\in\mathrm{S}}\sum_{\rbar} e^{-\beta E(\sbar,\rbar)+ h(\sbar)}\,
+\label{eq:ZMS}
 \end{equation}
-and the first sum goes over a set of allowed sequences $\sbar$. The simulation parameters $h(\sbar)$, similar to the parameters $g_m$ in ST, control the marginal distribution $P(\sbar)=Z^{-1}\sum_{\rbar} e^{-\beta E(\sbar,\rbar)+ h(\sbar)} = \tilde{Z}^{-1}e^{-\beta F(\sbar)+ h(\sbar)}$ and a roughly flat $P(\sbar)$ can be achieved by choosing $h(\sbar) \approx \beta F(\sbar)$, where $F(\sbar)$ is the free energy of sequence $\sbar$ at temperature $T$. 
+and S is a set of pre-selected sequences, i.e., the sequences to which visits are allowed during a simulation.} The simulation parameters $h(\sbar)$, similar to the parameters $g_m$ in ST, control the marginal distribution $P(\sbar)=Z^{-1}\sum_{\rbar} e^{-\beta E(\sbar,\rbar)+ h(\sbar)} = \tilde{Z}^{-1}e^{-\beta F(\sbar)+ h(\sbar)}$ and a roughly flat $P(\sbar)$ can be achieved by choosing $h(\sbar) \approx \beta F(\sbar)$, where $F(\sbar)$ is the free energy of sequence $\sbar$ at temperature $T$. 
 
-Two types of MC updates are required to sample from the distrubution in Eq.~\ref{MS}, ordinary conformational update $\rbar\rightarrow\rbar'$ and mutational updates $\sbar\rightarrow\sbar'$. The acceptance probabilities for the latter  becomes
+Two types of MC updates are required to sample from the distrubution in Eq.~\ref{MS}, ordinary conformational updates $\rbar\rightarrow\rbar'$ and {\color{red} sequence} updates $\sbar\rightarrow\sbar'$. The acceptance probabilities for the latter  becomes
 \begin{equation}
 P_\mathrm{acc} (\sbar\rightarrow\sbar') = \min [1, \exp\{-\beta\Delta E+\Delta h\}]\,,
 \label{accrej}
@@ -177,9 +183,16 @@ TN & 35 & (A1)ttt(N1)\\
 \end{table}
 
 
-\subsection{Monte Carlo simulation parameters}
+\subsection{Monte Carlo simulation parameters and updates}
 
-Both ST and MS simulations are carried out with two types of conformational updates $\rbar\rightarrow\rbar'$: (1) a global pivot move (20\%) which randomly picks a $\phi_\mathrm{i}$ angle or $\psi_\mathrm{i}$ angle and assign a new value between $-\pi$ and $\pi$; and (2) a semi-local move (80\%) which turns the $\phi_\mathrm{i}$ and $\psi_\mathrm{i}$-angles of 4 consecutive amino acids in a coordinated manner.~\cite{Favrin2001} In MS simulations, sequence updates $\sbar\rightarrow\sbar'$ are carried out by randomly picking a new sequence $\sbar'\ne\sbar$ and applying the accept-reject criterion in Eq.~\ref{accrej}. A sequence move is attempted every $1,000$ MC steps while temperature updates $m\rightarrow m'$ are attempted every 100 steps. The simulations carried out in this work are summarized in Table~II.
+Both ST and MS simulations are carried out with two types of conformational updates $\rbar\rightarrow\rbar'$: (1) a global pivot move (20\%) which randomly picks a $\phi_\mathrm{i}$ angle or $\psi_\mathrm{i}$ angle and assign a new value between $-\pi$ and $\pi$; and (2) a semi-local move (80\%) which turns the $\phi_\mathrm{i}$ and $\psi_\mathrm{i}$-angles of 4 consecutive amino acids in a coordinated manner.~\cite{Favrin2001} 
+
+%, and where S is the set of allowed (pre-selected) sequences, S (see Eq.~\ref{eq:ZMS})
+%i.e., given by the $\phi_\mathrm{i}$ and $\psi_\mathrm{i}$ angles,
+
+{\color{red}In MS simulations, sequence updates $\sbar\rightarrow\sbar'$ are carried out in the following way. First, a new random sequence $\sbar$ is picked from the set of pre-selected (allowed) sequences S, such that $\sbar'\ne\sbar$. The new sequence $\sbar'$ therefore differs from $\sbar$ in one or more amino acid positions. Thereafter, the sidechains of the protein, which remains in an unchanged (backbone) conformation $\rbar$, is re-built according to the new sequence $\sbar'$. Practically this means that, at the position(s) where the amino acid type has changed, the sidechain is altered according to the type change. For example, if $\mathrm{p}\rightarrow\mathrm{t}$, the $\mathrm{C}_\beta$ atom is removed and replaced with an $\mathrm{H}_{\alpha 2}$ atom or, if $\mathrm{p}\rightarrow\mathrm{h}$, the $\mathrm{C}_\beta$ remains in place but its character is changed to hydrophobic. Finally, the change in total energy $\Delta E$ is calculated and the accept-reject criterion in Eq.~\ref{accrej} is applied. If rejected, the old state $(\sbar,\rbar)$ is restored.} 
+
+A sequence update is attempted every $1,000$ MC steps while temperature updates $m\rightarrow m'$ are attempted every 100 steps. {\color{red}The computational cost for sequence updates is somewhat higher than for temperature updates, which does not require any energy calculations and is thus extremely rapid. For the purpose of comparing computational efficiencies between ST and MS, we therefore chose sequence updates to be slightly less frequent than temperature updates.} All simulations carried out in this work are summarized in Table~II.
 
 \begin{table}
 \caption{\label{tab2} List of simulations carried out in this work. }
@@ -220,7 +233,7 @@ We start by applying the MS algorithm to the set {\SR} across a range of tempera
 
 Figure~2 illustrates a typical MS simulation trajectory carried out at the lowest studied temperature which is below the folding temperature of both A1 and N1.~\cite{Holzgrafe2014,Holzgrafe2015} From the MC evolution of the total energy $E$, sequence index $\sbar$, and RMSD values from the representative structures in Fig.~2B, it is evident that visits to various sequences drive transitions into a range of structural states. In particular, there are frequent visits to $\alpha$-helix and $\beta$-hairpin structures and transitions between them are accompanied by a shift in which sequences are preferably visited. For example, visits to high $\sbar$-indices, including N1 with index 144, tend to coincide with formation of $\beta$-hairpin structures as required to generate correct equilibrium conformational ensembles. 
 
-One might have suspected that the MS algorithm would be hampered by poor acceptance rates for sequence updates. However, this is not the case in our model. We carry out updates $\sbar\rightarrow\sbar'$ by picking a new random sequence $\sbar'\ne\sbar$ from the set of allowed sequences. The (average) acceptance rate  depends on both $T$ and the step in sequences space $\Delta h$, i.e., the number of amino acid positions changed, as shown in Fig.~3. At the lowest $T$ and highest $\Delta h$, acceptance rates are only around 0.1-0.2. However, for most other $T$ and $\Delta h$ the overall acceptance rate is substantially higher and often above the oft-quoted rule-of-thumb value 0.25~\cite{Gilks1996} (see Fig~4B). An increased acceptance rate can easily be achieved by restricting proposed updates such that $\Delta h\le\Delta h_\mathrm{max}$, where $\Delta h_\mathrm{max}$ is a maximum step size, which might be necessary for longer chains. 
+One might have suspected that the MS algorithm would be hampered by poor acceptance rates for sequence updates. However, this is not the case in our model. We carry out updates $\sbar\rightarrow\sbar'$ by picking a new random sequence $\sbar'\ne\sbar$ from the set of allowed sequences. The (average) acceptance rate  depends on both $T$ and the step in sequences space $\Delta h$, i.e., the number of amino acid positions changed, as shown in Fig.~3. At the lowest $T$ and highest $\Delta h$, acceptance rates are only around 0.1-0.2. However, for most other $T$ and $\Delta h$ the overall acceptance rate is substantially higher and often above the oft-quoted rule-of-thumb value 0.25~\cite{Gilks1996} (see Fig~4B). An increased acceptance rate can easily be achieved by restricting proposed updates such that $\Delta h\le\Delta h_\mathrm{max}$, where $\Delta h_\mathrm{max}$ is a maximum step size, which might be necessary for longer chains. {\color{red} For example, $\Delta h_\mathrm{max} = 1$ would be equivalent to allowing only (single-site) ``mutational" updates, i.e., picking randomly a position and changing the amino acid type at that position.}
 
 \begin{figure}
 \includegraphics[width=8.0cm]{Fig4}
@@ -268,503 +281,26 @@ Interestingly, switching between folds IA and IB through one or more bistable se
 
 We have evaluated a biomolecular simulation algorithm that works by making the biological sequence a dynamic parameter. As a test, we applied it on a CG model for protein folding. The results indicate that there are two main benefits of this approach. Firstly, it provides a convenient way to sample the canonical distributions of large numbers of sequences in a single run and, secondly, it enhances the sampling of conformational space meaning it can be applied directly at low temperatures. The conformational sampling efficiency can be assessed from the comparison with ST. Although there is no single ``fair" way to compare the two methods, we chose as a measure of efficiency the statistical error of the total energy, $\sigE$, obtained with roughly the same computational cost per temperature and sequence. At the highest studied temperatures, we find that the statistical errors $\sigE$ are basically the same. This finding is not unexpected because conformational sampling of short polymers at high $T$ does not involve crossing any major energy barriers. As a result, successively sampled conformations for a given combination of sequence $\sbar$ and temperature $T$, are likely uncorrelated in both methods which leads to similar $\sigE$ values. 
 
-At lower temperatures, we find that the MS simulations often yields significantly smaller $\sigE$ than ST simulations. It is notable that this acceleration in conformational sampling vis-{\'a}-vis ST is achieved despite that simulations are carried out at constant $T$. Hence, rather than promoting escape from local minima by visits to higher $T$, as is the case in  ST~\cite{Marinari1992,Lyubartsev1992} or temperature replica-exchange,~\cite{Swendsen1986}  MS simulations escape local minima through visits to sequences where the minima are not as deep or even altogether absent. For the same reason, we expect the performance of the MS algorithm to depend on the size the sequence set used, as well as their conformational properties.  Specifically, the performance of MS simulations at low $T$ may hinge on the inclusion of at least a few sequences with poor stabilities such that partial unfolding of the chain is regularly triggered and thus promoting transitions to new conformational states. 
+At lower temperatures, we find that the MS simulations often yields significantly smaller $\sigE$ than ST simulations. It is notable that this acceleration in conformational sampling vis-{\'a}-vis ST is achieved despite that simulations are carried out at constant $T$. {\color{red} Therefore, rather than promoting escape from local minima by visits to higher $T$, as in  ST~\cite{Marinari1992,Lyubartsev1992} or temperature replica-exchange,~\cite{Swendsen1986} MS simulations must escape the minima occurring for one sequence through visits to other sequences. How this process works can be envisioned by considering an MS simulation that is visiting a sequence $s$ and is trapped in a local minimum, requiring that a high free-energy barrier is overcome for escape. The trapped state could be, e.g., a compact $\beta$-sheet rich state with a particular register. Eventually, sequence updates will carry the simulation to other sequences $\hat{s}$ while still remaining in the trapped state. However, the free energy barrier of this trapped state might be substantially lower for $\hat{s}$ than for $s$, or the barrier may even be altogether absent if the trapped state is unstable for $\hat{s}$, leading to rapid escape from the minimum. } The above reasoning also implies that the performance of the MS algorithm likely depends on the size the sequence set S as well as the conformational properties of the sequences. Specifically, the performance of MS simulations of proteins at low $T$ may benefit from the inclusion of at least a few sequences with poor stability properties, such that partial unfolding of the chain is regularly triggered and thus promoting transitions to new conformational states. 
 
-We emphasize that the MS method should not be seen as a general technique to speed up conformational sampling. However, our results indicate that for CG models that permit sequence updates to be carried out as a simple Metropolis step and when visits to higher $T$ is unwanted (or unnecessary), the MS method can be a highly efficient way to sample the equilibrium behavior of many sequences. In addition, the ability to promote conformational sampling without resorting to an increase in $T$ may make the method useful in simulations of biomolecules in ordered phases, such as lipid bilayers or double-stranded DNA, where escape from local minima can be especially challenging~\cite{Bereau2015,Curuksu2009} and elevated $T$ is typically avoided in simulations because it may lead to unwanted perturbations or unfolding of the basic underlying structure.
+{\color{red} Individual protein sequences that exhibit spontaneous transitions between widely different competing conformational states, such as fold switching proteins, are especially challenging to molecular simulation methods. One potential approach is to use Hamiltonian replica exchange to couple Go-like terms, i.e., artificial energy terms with a bias towards a given structure, with a physical force field.~\cite{Meinke2007,Chen2014,Bernhardt2016} In this approach, exchange moves ``feed" conformations into the replica of the physical force field, thereby enhancing sampling without introducing a bias in the simulation.~\cite{Bernhardt2016} Although we did not specifically study sampling efficiency of bistable sequences, which exhibit two basins of attractions, it is possible that a similar confomational ``feeding" take place in MS simulations, where the coupling occurs instead between different sequences rather than with different Go-type energy terms. }
+
+We emphasize that the MS method should not be seen as a general technique to speed up conformational sampling. However, our results indicate that for CG models that permit sequence updates to be carried out as a simple Metropolis step and when visits to higher $T$ is unwanted (or unnecessary), our method can be a highly efficient way to sample the equilibrium behavior of many sequences. {\color{red} This opens up for various applications. For example, it might be used to aid computational studies into the sequence determinants of conformational properties of intrinsically disordered~\cite{Das2013} or  denatured~\cite{Meng2013} proteins. Moreover, the ability of the MS algorithm to efficiently probe sequence effects on native structure and stability, as demonstrated in this work, may make it useful for efforts underway to merge molecular simulation and population genetics techniques.~\cite{Serohijos2014} We note also that, while applied to proteins here, the MS algorithm is equally valid for other bio-macromolecules, including DNA and RNA.} The ability to promote conformational sampling without resorting to an increase in $T$ may make the method useful in simulations of biomolecules in ordered phases, such as lipid bilayers or double-stranded DNA, where escape from local minima can be especially challenging~\cite{Bereau2015,Curuksu2009} and elevated $T$ is typically avoided in simulations because it may lead to unwanted perturbations or unfolding of the basic underlying structure.
 
 \section{Conclusion}
 
-We have evaluated an algorithm for biomolecular simulations that allows the thermodynamics of multiple  sequences to be calculated in a single run. We applied the algorithm to protein folding and showed that the thermodynamic behavior of $>$1,000 amino acid sequences with up to 35 amino acids could be determined in an intermediate-resolution CG model. The method performs a random walk in sequence space which is especially useful at low temperature as it promotes escape from local minima present in the free energy landscapes of individual sequences. The method might be suitable for CG simulations of other biomolecular systems, such as peptides in phospholipid bilayers, where sampling at elevated temperatures is not desirable. 
+We have evaluated an algorithm for biomolecular simulations that allows the thermodynamics of multiple  sequences to be calculated in a single run. We applied the algorithm to protein folding and showed that the thermodynamic behavior of $>$1,000 amino acid sequences with up to 35 amino acids could be determined in an intermediate-resolution CG model. The method performs a random walk in sequence space which is especially useful at low temperature as it promotes escape from local minima present in the free energy landscapes of individual sequences. The method might be suitable for CG simulations of {\color{red} various} other biomolecular systems, such as peptides in phospholipid bilayers, where sampling at elevated temperatures is not desirable. 
+
+\section{Supplementary Materia} 
+
+Validation of the MS algorithm. 
 
 \section{Acknowledgments}
 
 This work was supported by grants from Memorial University and National Sciences and Engineering Research Council of Canada (NSERC).  
 
-%\bibliography{/Users/stefan/Documents/Manuscripts/Jshort,/Users/stefan/Documents/Manuscripts/MyRefs}
+\bibliography{/Users/stefan/Documents/Manuscripts/Jshort,/Users/stefan/Documents/Manuscripts/MyRefs}
 %\input{Manuscript.bbl}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%merlin.mbs aipnum4-1.bst 2010-07-25 4.21a (PWD, AO, DPC) hacked
-%Control: key (0)
-%Control: author (8) initials jnrlst
-%Control: editor formatted (1) identically to author
-%Control: production of article title (-1) disabled
-%Control: page (0) single
-%Control: year (1) truncated
-%Control: production of eprint (0) enabled
-\begin{thebibliography}{45}%
-\makeatletter
-\providecommand \@ifxundefined [1]{%
- \@ifx{#1\undefined}
-}%
-\providecommand \@ifnum [1]{%
- \ifnum #1\expandafter \@firstoftwo
- \else \expandafter \@secondoftwo
- \fi
-}%
-\providecommand \@ifx [1]{%
- \ifx #1\expandafter \@firstoftwo
- \else \expandafter \@secondoftwo
- \fi
-}%
-\providecommand \natexlab [1]{#1}%
-\providecommand \enquote  [1]{``#1''}%
-\providecommand \bibnamefont  [1]{#1}%
-\providecommand \bibfnamefont [1]{#1}%
-\providecommand \citenamefont [1]{#1}%
-\providecommand \href@noop [0]{\@secondoftwo}%
-\providecommand \href [0]{\begingroup \@sanitize@url \@href}%
-\providecommand \@href[1]{\@@startlink{#1}\@@href}%
-\providecommand \@@href[1]{\endgroup#1\@@endlink}%
-\providecommand \@sanitize@url [0]{\catcode `\\12\catcode `\$12\catcode
-  `\&12\catcode `\#12\catcode `\^12\catcode `\_12\catcode `\%12\relax}%
-\providecommand \@@startlink[1]{}%
-\providecommand \@@endlink[0]{}%
-\providecommand \url  [0]{\begingroup\@sanitize@url \@url }%
-\providecommand \@url [1]{\endgroup\@href {#1}{\urlprefix }}%
-\providecommand \urlprefix  [0]{URL }%
-\providecommand \Eprint [0]{\href }%
-\providecommand \doibase [0]{http://dx.doi.org/}%
-\providecommand \selectlanguage [0]{\@gobble}%
-\providecommand \bibinfo  [0]{\@secondoftwo}%
-\providecommand \bibfield  [0]{\@secondoftwo}%
-\providecommand \translation [1]{[#1]}%
-\providecommand \BibitemOpen [0]{}%
-\providecommand \bibitemStop [0]{}%
-\providecommand \bibitemNoStop [0]{.\EOS\space}%
-\providecommand \EOS [0]{\spacefactor3000\relax}%
-\providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
-\let\auto@bib@innerbib\@empty
-%</preamble>
-\bibitem [{\citenamefont {Piana}, \citenamefont {Klepeis},\ and\ \citenamefont
-  {Shaw}(2014)}]{Piana2014}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Piana}}, \bibinfo {author} {\bibfnamefont {J.~L.}\ \bibnamefont {Klepeis}},
-  \ and\ \bibinfo {author} {\bibfnamefont {D.~E.}\ \bibnamefont {Shaw}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Curr Opin Struct
-  Biol}\ }\textbf {\bibinfo {volume} {24}},\ \bibinfo {pages} {98} (\bibinfo
-  {year} {2014})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Ding}\ \emph {et~al.}(2008)\citenamefont {Ding},
-  \citenamefont {Tsao}, \citenamefont {Nie},\ and\ \citenamefont
-  {Dokholyan}}]{Ding2008}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
-  {Ding}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Tsao}}, \bibinfo
-  {author} {\bibfnamefont {H.}~\bibnamefont {Nie}}, \ and\ \bibinfo {author}
-  {\bibfnamefont {N.~V.}\ \bibnamefont {Dokholyan}},\ }\href@noop {} {\bibfield
-   {journal} {\bibinfo  {journal} {Structure}\ }\textbf {\bibinfo {volume}
-  {16}},\ \bibinfo {pages} {1010} (\bibinfo {year} {2008})}\BibitemShut
-  {NoStop}%
-\bibitem [{\citenamefont {Irb{\"a}ck}\ and\ \citenamefont
-  {Mohanty}(2006)}]{Irback2006}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Irb{\"a}ck}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Mohanty}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J
-  Comput Chem}\ }\textbf {\bibinfo {volume} {27}},\ \bibinfo {pages} {1548}
-  (\bibinfo {year} {2006})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Verma}\ and\ \citenamefont
-  {Wenzel}(2009)}]{Verma2009}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Verma}}\ and\ \bibinfo {author} {\bibfnamefont {W.}~\bibnamefont {Wenzel}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Biophys J}\
-  }\textbf {\bibinfo {volume} {96}},\ \bibinfo {pages} {3483} (\bibinfo {year}
-  {2009})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Yang}\ \emph {et~al.}(2007)\citenamefont {Yang},
-  \citenamefont {Chen}, \citenamefont {Skolnick},\ and\ \citenamefont
-  {Shakhnovich}}]{Yang2007}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~S.}\ \bibnamefont
-  {Yang}}, \bibinfo {author} {\bibfnamefont {W.~W.}\ \bibnamefont {Chen}},
-  \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Skolnick}}, \ and\
-  \bibinfo {author} {\bibfnamefont {E.~I.}\ \bibnamefont {Shakhnovich}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Structure}\
-  }\textbf {\bibinfo {volume} {15}},\ \bibinfo {pages} {53} (\bibinfo {year}
-  {2007})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Bernardi}, \citenamefont {Melo},\ and\ \citenamefont
-  {Schulten}(2015)}]{Bernardi2015}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~C.}\ \bibnamefont
-  {Bernardi}}, \bibinfo {author} {\bibfnamefont {M.~C.}\ \bibnamefont {Melo}},
-  \ and\ \bibinfo {author} {\bibfnamefont {K.}~\bibnamefont {Schulten}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Biochim Biophys
-  Acta}\ }\textbf {\bibinfo {volume} {1850}},\ \bibinfo {pages} {872} (\bibinfo
-  {year} {2015})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {McGuffee}\ and\ \citenamefont
-  {Elcock}(2010)}]{McGuffee2010}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.~R.}\ \bibnamefont
-  {McGuffee}}\ and\ \bibinfo {author} {\bibfnamefont {A.~H.}\ \bibnamefont
-  {Elcock}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {PLOS
-  Comput Biol}\ }\textbf {\bibinfo {volume} {6}},\ \bibinfo {pages} {e1000694}
-  (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Miao}, \citenamefont {Johnson},\ and\ \citenamefont
-  {Ortoleva}(2010)}]{Miao2010}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont
-  {Miao}}, \bibinfo {author} {\bibfnamefont {J.~E.}\ \bibnamefont {Johnson}}, \
-  and\ \bibinfo {author} {\bibfnamefont {P.~J.}\ \bibnamefont {Ortoleva}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J Phys Chem B}\
-  }\textbf {\bibinfo {volume} {114}},\ \bibinfo {pages} {11181} (\bibinfo
-  {year} {2010})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Perilla}\ \emph {et~al.}(2016)\citenamefont
-  {Perilla}, \citenamefont {Hadden}, \citenamefont {Goh}, \citenamefont
-  {Mayne},\ and\ \citenamefont {Schulten}}]{Perilla2016}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.~R.}\ \bibnamefont
-  {Perilla}}, \bibinfo {author} {\bibfnamefont {J.~A.}\ \bibnamefont {Hadden}},
-  \bibinfo {author} {\bibfnamefont {B.~C.}\ \bibnamefont {Goh}}, \bibinfo
-  {author} {\bibfnamefont {C.~G.}\ \bibnamefont {Mayne}}, \ and\ \bibinfo
-  {author} {\bibfnamefont {K.}~\bibnamefont {Schulten}},\ }\href@noop {}
-  {\bibfield  {journal} {\bibinfo  {journal} {J Phys Chem Lett}\ }\textbf
-  {\bibinfo {volume} {7}},\ \bibinfo {pages} {1836} (\bibinfo {year}
-  {2016})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Lindorff-Larsen}\ \emph {et~al.}(2011)\citenamefont
-  {Lindorff-Larsen}, \citenamefont {Piana}, \citenamefont {Dror},\ and\
-  \citenamefont {Shaw}}]{Lindorff-Larsen2011}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {K.}~\bibnamefont
-  {Lindorff-Larsen}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Piana}}, \bibinfo {author} {\bibfnamefont {R.~O.}\ \bibnamefont {Dror}}, \
-  and\ \bibinfo {author} {\bibfnamefont {D.~E.}\ \bibnamefont {Shaw}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Science}\ }\textbf
-  {\bibinfo {volume} {334}},\ \bibinfo {pages} {517} (\bibinfo {year}
-  {2011})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Yu}\ \emph {et~al.}(2016)\citenamefont {Yu},
-  \citenamefont {Mori}, \citenamefont {Ando}, \citenamefont {Harada},
-  \citenamefont {Jung}, \citenamefont {Sugita},\ and\ \citenamefont
-  {Feig}}]{Yu2016}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {I.}~\bibnamefont
-  {Yu}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Mori}}, \bibinfo
-  {author} {\bibfnamefont {T.}~\bibnamefont {Ando}}, \bibinfo {author}
-  {\bibfnamefont {R.}~\bibnamefont {Harada}}, \bibinfo {author} {\bibfnamefont
-  {J.}~\bibnamefont {Jung}}, \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont
-  {Sugita}}, \ and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Feig}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {ELife}\
-  }\textbf {\bibinfo {volume} {5}} (\bibinfo {year} {2016})}\BibitemShut
-  {NoStop}%
-\bibitem [{\citenamefont {Riniker}, \citenamefont {Allison},\ and\
-  \citenamefont {van Gunsteren}(2012)}]{Riniker2012}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Riniker}}, \bibinfo {author} {\bibfnamefont {J.~R.}\ \bibnamefont
-  {Allison}}, \ and\ \bibinfo {author} {\bibfnamefont {W.~F.}\ \bibnamefont
-  {van Gunsteren}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Phys Chem Chem Phys}\ }\textbf {\bibinfo {volume} {14}},\ \bibinfo {pages}
-  {12423} (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Ing{\'{o}}lfsson}\ \emph {et~al.}(2014)\citenamefont
-  {Ing{\'{o}}lfsson}, \citenamefont {Lopez}, \citenamefont {Uusitalo},
-  \citenamefont {{de Jong}}, \citenamefont {Gopal}, \citenamefont {Periole},\
-  and\ \citenamefont {Marrink}}]{Ingolfsson2014}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {H.~I.}\ \bibnamefont
-  {Ing{\'{o}}lfsson}}, \bibinfo {author} {\bibfnamefont {C.~A.}\ \bibnamefont
-  {Lopez}}, \bibinfo {author} {\bibfnamefont {J.~J.}\ \bibnamefont {Uusitalo}},
-  \bibinfo {author} {\bibfnamefont {D.~H.}\ \bibnamefont {{de Jong}}}, \bibinfo
-  {author} {\bibfnamefont {S.~M.}\ \bibnamefont {Gopal}}, \bibinfo {author}
-  {\bibfnamefont {X.}~\bibnamefont {Periole}}, \ and\ \bibinfo {author}
-  {\bibfnamefont {S.~J.}\ \bibnamefont {Marrink}},\ }\href@noop {} {\bibfield
-  {journal} {\bibinfo  {journal} {WIREs Comput Mol Sci}\ }\textbf {\bibinfo
-  {volume} {4}},\ \bibinfo {pages} {225} (\bibinfo {year} {2014})}\BibitemShut
-  {NoStop}%
-\bibitem [{\citenamefont {Beland}\ \emph {et~al.}(2011)\citenamefont {Beland},
-  \citenamefont {Brommer}, \citenamefont {El-Mellouhi}, \citenamefont {Joly},\
-  and\ \citenamefont {Mousseau}}]{Beland2011}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {L.~K.}\ \bibnamefont
-  {Beland}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {Brommer}},
-  \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont {El-Mellouhi}}, \bibinfo
-  {author} {\bibfnamefont {J.~F.}\ \bibnamefont {Joly}}, \ and\ \bibinfo
-  {author} {\bibfnamefont {N.}~\bibnamefont {Mousseau}},\ }\href@noop {}
-  {\bibfield  {journal} {\bibinfo  {journal} {Phys Rev E}\ }\textbf {\bibinfo
-  {volume} {84}},\ \bibinfo {pages} {046704} (\bibinfo {year}
-  {2011})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Proctor}, \citenamefont {Ding},\ and\ \citenamefont
-  {Dokholyan}(2011)}]{Proctor2011}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.~A.}\ \bibnamefont
-  {Proctor}}, \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont {Ding}}, \
-  and\ \bibinfo {author} {\bibfnamefont {N.~V.}\ \bibnamefont {Dokholyan}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {WIREs Comput Mol
-  Sci}\ }\textbf {\bibinfo {volume} {1}},\ \bibinfo {pages} {80} (\bibinfo
-  {year} {2011})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Vitalis}\ and\ \citenamefont
-  {Pappu}(2009)}]{Vitalis2009}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Vitalis}}\ and\ \bibinfo {author} {\bibfnamefont {R.~V.}\ \bibnamefont
-  {Pappu}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Annu
-  Rep Comput Chem}\ }\textbf {\bibinfo {volume} {5}},\ \bibinfo {pages} {49}
-  (\bibinfo {year} {2009})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Zarrinpar}, \citenamefont {Park},\ and\ \citenamefont
-  {Lim}(2003)}]{Zarrinpar2003}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Zarrinpar}}, \bibinfo {author} {\bibfnamefont {S.~H.}\ \bibnamefont {Park}},
-  \ and\ \bibinfo {author} {\bibfnamefont {W.~A.}\ \bibnamefont {Lim}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Nature}\ }\textbf
-  {\bibinfo {volume} {426}},\ \bibinfo {pages} {676} (\bibinfo {year}
-  {2003})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Hakes}\ \emph {et~al.}(2007)\citenamefont {Hakes},
-  \citenamefont {Lovell}, \citenamefont {Oliver},\ and\ \citenamefont
-  {Robertson}}]{Hakes2007}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {L.}~\bibnamefont
-  {Hakes}}, \bibinfo {author} {\bibfnamefont {S.~C.}\ \bibnamefont {Lovell}},
-  \bibinfo {author} {\bibfnamefont {S.~G.}\ \bibnamefont {Oliver}}, \ and\
-  \bibinfo {author} {\bibfnamefont {D.~L.}\ \bibnamefont {Robertson}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Proc Natl Acad Sci
-  USA}\ }\textbf {\bibinfo {volume} {104}},\ \bibinfo {pages} {7999} (\bibinfo
-  {year} {2007})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Rohs}\ \emph {et~al.}(2010)\citenamefont {Rohs},
-  \citenamefont {Jin}, \citenamefont {West}, \citenamefont {Joshi},
-  \citenamefont {Honig},\ and\ \citenamefont {Mann}}]{Rohs2010}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
-  {Rohs}}, \bibinfo {author} {\bibfnamefont {X.}~\bibnamefont {Jin}}, \bibinfo
-  {author} {\bibfnamefont {S.~M.}\ \bibnamefont {West}}, \bibinfo {author}
-  {\bibfnamefont {R.}~\bibnamefont {Joshi}}, \bibinfo {author} {\bibfnamefont
-  {B.}~\bibnamefont {Honig}}, \ and\ \bibinfo {author} {\bibfnamefont {R.~S.}\
-  \bibnamefont {Mann}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo
-  {journal} {Annu Rev Biochem}\ }\textbf {\bibinfo {volume} {79}},\ \bibinfo
-  {pages} {233} (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Ross}\ and\ \citenamefont
-  {Poirier}(2004)}]{Ross2004}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.~A.}\ \bibnamefont
-  {Ross}}\ and\ \bibinfo {author} {\bibfnamefont {M.~A.}\ \bibnamefont
-  {Poirier}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Nat
-  Med}\ }\textbf {\bibinfo {volume} {10 Suppl}},\ \bibinfo {pages} {S10}
-  (\bibinfo {year} {2004})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Tzul}, \citenamefont {Vasilchuk},\ and\ \citenamefont
-  {Makhatadze}(2017)}]{Tzul2017}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.~O.}\ \bibnamefont
-  {Tzul}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Vasilchuk}}, \
-  and\ \bibinfo {author} {\bibfnamefont {G.~I.}\ \bibnamefont {Makhatadze}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Proc Natl Acad Sci
-  USA}\ }\textbf {\bibinfo {volume} {114}},\ \bibinfo {pages} {E1627} (\bibinfo
-  {year} {2017})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Wensley}\ \emph {et~al.}(2010)\citenamefont
-  {Wensley}, \citenamefont {Batey}, \citenamefont {Bone}, \citenamefont {Chan},
-  \citenamefont {Tumelty}, \citenamefont {Steward}, \citenamefont {Kwa},
-  \citenamefont {Borgia},\ and\ \citenamefont {Clarke}}]{Wensley2010}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.~G.}\ \bibnamefont
-  {Wensley}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Batey}},
-  \bibinfo {author} {\bibfnamefont {F.~A.}\ \bibnamefont {Bone}}, \bibinfo
-  {author} {\bibfnamefont {Z.~M.}\ \bibnamefont {Chan}}, \bibinfo {author}
-  {\bibfnamefont {N.~R.}\ \bibnamefont {Tumelty}}, \bibinfo {author}
-  {\bibfnamefont {A.}~\bibnamefont {Steward}}, \bibinfo {author} {\bibfnamefont
-  {L.~G.}\ \bibnamefont {Kwa}}, \bibinfo {author} {\bibfnamefont
-  {A.}~\bibnamefont {Borgia}}, \ and\ \bibinfo {author} {\bibfnamefont
-  {J.}~\bibnamefont {Clarke}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo
-  {journal} {Nature}\ }\textbf {\bibinfo {volume} {463}},\ \bibinfo {pages}
-  {685} (\bibinfo {year} {2010})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Vukmirovic}\ and\ \citenamefont
-  {Tilghman}(2000)}]{Vukmirovic2000}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {O.~G.}\ \bibnamefont
-  {Vukmirovic}}\ and\ \bibinfo {author} {\bibfnamefont {S.~M.}\ \bibnamefont
-  {Tilghman}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Nature}\ }\textbf {\bibinfo {volume} {405}},\ \bibinfo {pages} {820}
-  (\bibinfo {year} {2000})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Bhattacherjee}\ and\ \citenamefont
-  {Wallin}(2012)}]{Bhattacherjee2012}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Bhattacherjee}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Biophys J}\ }\textbf {\bibinfo {volume} {102}},\ \bibinfo {pages} {569}
-  (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Irb{\"a}ck}\ and\ \citenamefont
-  {Potthast}(1995)}]{Irback1995}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Irb{\"a}ck}}\ and\ \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont
-  {Potthast}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J.
-  Comp. Phys.}\ }\textbf {\bibinfo {volume} {103}},\ \bibinfo {pages} {10298}
-  (\bibinfo {year} {1995})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Bhattacherjee}\ and\ \citenamefont
-  {Wallin}(2013)}]{Bhattacherjee2013}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Bhattacherjee}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {PLOS
-  Comput Biol}\ }\textbf {\bibinfo {volume} {9}},\ \bibinfo {pages} {e1003277}
-  (\bibinfo {year} {2013})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Wallin}(2017)}]{Wallin2017}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Methods Mol Biol}\ }\textbf {\bibinfo {volume} {1561}},\ \bibinfo {pages}
-  {201} (\bibinfo {year} {2017})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Holzgr{\"a}fe}\ and\ \citenamefont
-  {Wallin}(2014)}]{Holzgrafe2014}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
-  {Holzgr{\"a}fe}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Biophys J}\ }\textbf {\bibinfo {volume} {107}},\ \bibinfo {pages} {1217}
-  (\bibinfo {year} {2014})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Bryan}\ and\ \citenamefont
-  {Orban}(2010)}]{Bryan2010}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.~N.}\ \bibnamefont
-  {Bryan}}\ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Orban}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Curr Opin Struct
-  Biol}\ }\textbf {\bibinfo {volume} {20}},\ \bibinfo {pages} {482} (\bibinfo
-  {year} {2010})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Marinari}\ and\ \citenamefont
-  {Parisi}(1992)}]{Marinari1992}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
-  {Marinari}}\ and\ \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
-  {Parisi}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Europhys Lett}\ }\textbf {\bibinfo {volume} {19}} (\bibinfo {year}
-  {1992})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Lyubartsev}\ \emph {et~al.}(1992)\citenamefont
-  {Lyubartsev}, \citenamefont {Martsinovski}, \citenamefont {Shevkunov},\ and\
-  \citenamefont {Vorontsov-Velyaminov}}]{Lyubartsev1992}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.~P.}\ \bibnamefont
-  {Lyubartsev}}, \bibinfo {author} {\bibfnamefont {A.~A.}\ \bibnamefont
-  {Martsinovski}}, \bibinfo {author} {\bibfnamefont {S.~V.}\ \bibnamefont
-  {Shevkunov}}, \ and\ \bibinfo {author} {\bibfnamefont {P.~N.}\ \bibnamefont
-  {Vorontsov-Velyaminov}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo
-  {journal} {J. Comp. Phys.}\ }\textbf {\bibinfo {volume} {96}},\ \bibinfo
-  {pages} {1776} (\bibinfo {year} {1992})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Mitsutake}, \citenamefont {Sugita},\ and\
-  \citenamefont {Okamoto}(2001)}]{Mitsutake2001}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Mitsutake}}, \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Sugita}}, \
-  and\ \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Okamoto}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Biopolymers}\
-  }\textbf {\bibinfo {volume} {60}},\ \bibinfo {pages} {96} (\bibinfo {year}
-  {2001})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Favrin}, \citenamefont {Irb{\"a}ck},\ and\
-  \citenamefont {Sjunnesson}(2001)}]{Favrin2001}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
-  {Favrin}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Irb{\"a}ck}},
-  \ and\ \bibinfo {author} {\bibfnamefont {F.}~\bibnamefont {Sjunnesson}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J. Comp. Phys.}\
-  }\textbf {\bibinfo {volume} {114}},\ \bibinfo {pages} {8154} (\bibinfo {year}
-  {2001})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Holzgr{\"a}fe}\ and\ \citenamefont
-  {Wallin}(2015)}]{Holzgrafe2015}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
-  {Holzgr{\"a}fe}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
-  {Wallin}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys
-  Biol}\ }\textbf {\bibinfo {volume} {12}},\ \bibinfo {pages} {026002}
-  (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Gelman}, \citenamefont {Roberts},\ and\ \citenamefont
-  {Gilks}(1996)}]{Gilks1996}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Gelman}}, \bibinfo {author} {\bibfnamefont {G.~O.}\ \bibnamefont {Roberts}},
-  \ and\ \bibinfo {author} {\bibfnamefont {W.~R.}\ \bibnamefont {Gilks}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Bayesian Statist}\
-  }\textbf {\bibinfo {volume} {5}},\ \bibinfo {pages} {599} (\bibinfo {year}
-  {1996})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Gansner}\ and\ \citenamefont
-  {North}(2000)}]{Graphviz2000}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.~R.}\ \bibnamefont
-  {Gansner}}\ and\ \bibinfo {author} {\bibfnamefont {S.~C.}\ \bibnamefont
-  {North}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
-  {Software -- practice and experience}\ }\textbf {\bibinfo {volume} {30}},\
-  \bibinfo {pages} {1203} (\bibinfo {year} {2000})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Alexander}\ \emph {et~al.}(2009)\citenamefont
-  {Alexander}, \citenamefont {He}, \citenamefont {Chen}, \citenamefont
-  {Orban},\ and\ \citenamefont {Bryan}}]{Alexander2009}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.~A.}\ \bibnamefont
-  {Alexander}}, \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {He}},
-  \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Chen}}, \bibinfo {author}
-  {\bibfnamefont {J.}~\bibnamefont {Orban}}, \ and\ \bibinfo {author}
-  {\bibfnamefont {P.~N.}\ \bibnamefont {Bryan}},\ }\href@noop {} {\bibfield
-  {journal} {\bibinfo  {journal} {Proc Natl Acad Sci USA}\ }\textbf {\bibinfo
-  {volume} {106}},\ \bibinfo {pages} {21149} (\bibinfo {year}
-  {2009})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {He}\ \emph {et~al.}(2012)\citenamefont {He},
-  \citenamefont {Chen}, \citenamefont {Alexander}, \citenamefont {Bryan},\ and\
-  \citenamefont {Orban}}]{He2012}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont
-  {He}}, \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Chen}}, \bibinfo
-  {author} {\bibfnamefont {P.~A.}\ \bibnamefont {Alexander}}, \bibinfo {author}
-  {\bibfnamefont {P.~N.}\ \bibnamefont {Bryan}}, \ and\ \bibinfo {author}
-  {\bibfnamefont {J.}~\bibnamefont {Orban}},\ }\href@noop {} {\bibfield
-  {journal} {\bibinfo  {journal} {Structure}\ }\textbf {\bibinfo {volume}
-  {20}},\ \bibinfo {pages} {283} (\bibinfo {year} {2012})}\BibitemShut
-  {NoStop}%
-\bibitem [{\citenamefont {Kouza}\ and\ \citenamefont
-  {Hansmann}(2012)}]{Kouza2012}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Kouza}}\ and\ \bibinfo {author} {\bibfnamefont {U.~H.}\ \bibnamefont
-  {Hansmann}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J
-  Phys Chem B}\ }\textbf {\bibinfo {volume} {116}},\ \bibinfo {pages} {6645}
-  (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Sikosek}, \citenamefont {Krobath},\ and\
-  \citenamefont {Chan}(2016)}]{Sikosek2016}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
-  {Sikosek}}, \bibinfo {author} {\bibfnamefont {H.}~\bibnamefont {Krobath}}, \
-  and\ \bibinfo {author} {\bibfnamefont {H.~S.}\ \bibnamefont {Chan}},\
-  }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {PLOS Comput Biol}\
-  }\textbf {\bibinfo {volume} {12}},\ \bibinfo {pages} {e1004960} (\bibinfo
-  {year} {2016})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Sutto}\ and\ \citenamefont
-  {Camilloni}(2012)}]{Sutto2012}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {L.}~\bibnamefont
-  {Sutto}}\ and\ \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
-  {Camilloni}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J.
-  Comp. Phys.}\ }\textbf {\bibinfo {volume} {136}},\ \bibinfo {pages} {185101}
-  (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Sikosek}, \citenamefont {Bornberg-Bauer},\ and\
-  \citenamefont {Chan}(2012)}]{Sikosek2012}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
-  {Sikosek}}, \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
-  {Bornberg-Bauer}}, \ and\ \bibinfo {author} {\bibfnamefont {H.~S.}\
-  \bibnamefont {Chan}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo
-  {journal} {PLOS Comput Biol}\ }\textbf {\bibinfo {volume} {8}},\ \bibinfo
-  {pages} {e1002659} (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Swendsen}\ and\ \citenamefont
-  {Wang}(1986)}]{Swendsen1986}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~H.}\ \bibnamefont
-  {Swendsen}}\ and\ \bibinfo {author} {\bibfnamefont {J.-S.}\ \bibnamefont
-  {Wang}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
-  Rev. Lett.}\ }\textbf {\bibinfo {volume} {57}},\ \bibinfo {pages} {2607}
-  (\bibinfo {year} {1986})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Bereau}\ and\ \citenamefont
-  {Deserno}(2015)}]{Bereau2015}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
-  {Bereau}}\ and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Deserno}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J
-  Membr Biol}\ }\textbf {\bibinfo {volume} {248}},\ \bibinfo {pages} {395}
-  (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Curuksu}\ and\ \citenamefont
-  {Zacharias}(2009)}]{Curuksu2009}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
-  {Curuksu}}\ and\ \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Zacharias}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal} {J.
-  Comp. Phys.}\ }\textbf {\bibinfo {volume} {130}},\ \bibinfo {pages} {104110}
-  (\bibinfo {year} {2009})}\BibitemShut {NoStop}%
-\end{thebibliography}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
